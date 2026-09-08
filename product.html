@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Produk - Digital Product Store</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="index.html" class="logo">DigitalStore</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Katalog</a></li>
+        <li><a href="redeem.html">Tukar Kode</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section>
+    <div class="container" id="productDetailContainer">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+        <div>
+          <img id="detailThumbnail" src="https://via.placeholder.com/600x400" alt="Thumbnail" style="border-radius: 1rem; width: 100%;">
+        </div>
+        <div>
+          <span id="detailKategori" class="badge badge-success">Kategori</span>
+          <h1 id="detailNama" style="margin: 1rem 0; font-size: 2.5rem;">Loading...</h1>
+          <p id="detailHarga" style="font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 1.5rem;">Rp 0</p>
+          <p id="detailDeskripsi" style="color: var(--gray); margin-bottom: 2rem;">Deskripsi produk...</p>
+          
+          <a id="btnCheckout" href="#" class="btn btn-primary" style="font-size: 1.125rem; padding: 1rem 2rem;">Beli Sekarang</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/app.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      if (id) loadProductDetail(id);
+    });
+  </script>
+</body>
+</html>

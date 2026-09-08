@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Digital Product Store</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="index.html" class="logo">DigitalStore</a>
+    </div>
+  </nav>
+
+  <section>
+    <div class="container" style="max-width: 600px;">
+      <div class="section-title">
+        <h2>Selesaikan Pesanan Anda</h2>
+        <p>Akses langsung ke aset digital setelah konfirmasi transfer.</p>
+      </div>
+
+      <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: var(--shadow);">
+        <form id="checkoutForm">
+          <input type="hidden" id="idProduk">
+          
+          <div class="form-group">
+            <label>Nama Produk</label>
+            <input type="text" id="namaProduk" class="form-control" readonly disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Total Pembayaran</label>
+            <input type="text" id="totalBayar" class="form-control" readonly disabled style="font-weight: bold; color: var(--primary);">
+          </div>
+
+          <div class="form-group">
+            <label for="namaCustomer">Nama Lengkap *</label>
+            <input type="text" id="namaCustomer" class="form-control" required placeholder="Budi Santoso">
+          </div>
+
+          <div class="form-group">
+            <label for="kontakCustomer">Email / No. WhatsApp *</label>
+            <input type="text" id="kontakCustomer" class="form-control" required placeholder="budi@example.com / 08123456789">
+          </div>
+
+          <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+            <p style="font-weight: 600; margin-bottom: 0.5rem;">Instruksi Pembayaran:</p>
+            <p style="font-size: 0.875rem; color: var(--gray);">Transfer Bank BCA: <strong>8820192841</strong> (a.n. Digital Product Store)</p>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Konfirmasi & Pesan Sekarang</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/app.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      const nama = urlParams.get('name');
+      const harga = urlParams.get('price');
+
+      if (id) {
+        document.getElementById('idProduk').value = id;
+        document.getElementById('namaProduk').value = decodeURIComponent(nama || '');
+        document.getElementById('totalBayar').value = 'Rp ' + Number(harga || 0).toLocaleString('id-ID');
+      }
+
+      document.getElementById('checkoutForm').addEventListener('submit', handleCheckoutSubmit);
+    });
+  </script>
+</body>
+</html>

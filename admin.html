@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Digital Product Store</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Login Screen -->
+  <div id="loginScreen" class="login-container">
+    <div class="login-box">
+      <h2 style="text-align: center; margin-bottom: 2rem;">Admin Login</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="adminEmail" class="form-control" placeholder="admin@domain.com" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="adminPassword" class="form-control" placeholder="********" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+      </form>
+      <p id="loginError" style="color: var(--danger); margin-top: 1rem; display: none;"></p>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboardScreen" class="admin-layout" style="display: none;">
+    <aside class="sidebar">
+      <a href="admin.html" class="logo">📊 Admin Panel</a>
+      <ul class="sidebar-nav">
+        <li><a href="#" class="nav-link active" data-section="overview">🏠 Overview</a></li>
+        <li><a href="#" class="nav-link" data-section="products">📦 Produk</a></li>
+        <li><a href="#" class="nav-link" data-section="orders">📋 Pesanan</a></li>
+        <li><a href="#" class="nav-link" data-section="testimonials">💬 Testimoni</a></li>
+        <li><a href="#" class="nav-link" data-section="reports">📈 Laporan</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="admin-header">
+        <h2 id="sectionTitle">Dashboard Overview</h2>
+        <button class="btn btn-outline" id="logoutBtn">Logout</button>
+      </div>
+
+      <!-- Overview Section -->
+      <div id="section-overview" class="section-page active">
+        <div class="stat-cards">
+          <div class="stat-card">
+            <h3>Total Pendapatan</h3>
+            <div class="stat-value" id="statRevenue">Rp 0</div>
+            <div class="stat-change">✓ Transaksi terverifikasi</div>
+          </div>
+          <div class="stat-card">
+            <h3>Pesanan Menunggu</h3>
+            <div class="stat-value" id="statPending">0</div>
+            <div class="stat-change">⏳ Menunggu verifikasi</div>
+          </div>
+          <div class="stat-card">
+            <h3>Kode Sudah Ditukar</h3>
+            <div class="stat-value" id="statRedeemed">0</div>
+            <div class="stat-change">✅ Sudah diakses</div>
+          </div>
+          <div class="stat-card">
+            <h3>Kunjungan Hari Ini</h3>
+            <div class="stat-value" id="statTodayVisits">0</div>
+            <div class="stat-change">👥 Pengunjung hari ini</div>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <h3 style="margin-bottom: 1rem;">Penjualan & Pendapatan</h3>
+          <div class="chart-bar" id="salesChart"></div>
+        </div>
+
+        <div class="chart-container">
+          <h3 style="margin-bottom: 1rem;">Kunjungan Harian</h3>
+          <div class="chart-bar" id="visitsChart"></div>
+        </div>
+
+        <div class="chart-container">
+          <h3 style="margin-bottom: 1rem;">Pesanan Terakhir</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>ID Pesanan</th><th>Produk</th><th>Customer</th><th>Status</th><th>Aksi</th></tr>
+              </thead>
+              <tbody id="latestOrdersTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Section -->
+      <div id="section-products" class="section-page">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h2>Kelola Produk</h2>
+          <button class="btn btn-primary" id="addProductBtn">+ Tambah Produk</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Thumbnail</th><th>Kategori</th><th>Nama</th><th>Harga</th><th>Status</th><th>Aksi</th></tr>
+            </thead>
+            <tbody id="productsTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Orders Section -->
+      <div id="section-orders" class="section-page">
+        <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+          <select class="form-control" id="orderFilter" style="width: auto;">
+            <option value="">Semua Status</option>
+            <option value="Menunggu">Menunggu</option>
+            <option value="Terverifikasi">Terverifikasi</option>
+            <option value="Dibatalkan">Dibatalkan</option>
+          </select>
+          <input type="text" class="form-control" id="orderSearch" placeholder="Cari pesanan..." style="width: 300px;">
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>ID Pesanan</th><th>Produk</th><th>Customer</th><th>Kontak</th><th>Status Bayar</th><th>Kode Redeem</th><th>Aksi</th></tr>
+            </thead>
+            <tbody id="ordersTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Testimonials Section -->
+      <div id="section-testimonials" class="section-page">
+        <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+          <select class="form-control" id="testimoniFilter" style="width: auto;">
+            <option value="">Semua Status</option>
+            <option value="Menunggu Moderasi">Menunggu Moderasi</option>
+            <option value="Disetujui">Disetujui</option>
+            <option value="Ditolak">Ditolak</option>
+          </select>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Customer</th><th>Produk</th><th>Rating</th><th>Ulasan</th><th>Status</th><th>Aksi</th></tr>
+            </thead>
+            <tbody id="testimoniTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Reports Section -->
+      <div id="section-reports" class="section-page">
+        <div class="stat-cards">
+          <div class="stat-card">
+            <h3>Total Revenue</h3>
+            <div class="stat-value" id="reportRevenue">Rp 0</div>
+          </div>
+          <div class="stat-card">
+            <h3>Conversion Rate</h3>
+            <div class="stat-value" id="reportConversion">0%</div>
+          </div>
+          <div class="stat-card">
+            <h3>Avg Order Value</h3>
+            <div class="stat-value" id="reportAOV">Rp 0</div>
+          </div>
+          <div class="stat-card">
+            <h3>Testimoni Menunggu</h3>
+            <div class="stat-value" id="reportPendingRev">0</div>
+          </div>
+        </div>
+        <div class="chart-container">
+          <h3 style="margin-bottom: 1rem;">Revenue vs Kunjungan</h3>
+          <div class="chart-bar" id="reportChart"></div>
+        </div>
+        <div class="chart-container">
+          <h3>Log Transaksi</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr><th>ID Pesanan</th><th>Produk</th><th>Customer</th><th>Tanggal</th><th>Revenue</th></tr>
+              </thead>
+              <tbody id="transactionLog"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Product Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <span style="position: absolute; top: 1rem; right: 1rem; cursor: pointer; font-size: 1.5rem;" id="closeModal">&times;</span>
+      <h3 id="modalTitle" style="margin-bottom: 1.5rem;">Tambah Produk</h3>
+      <form id="productForm">
+        <input type="hidden" id="editProductId">
+        <div class="form-group"><label>Nama Produk *</label><input type="text" id="prodName" class="form-control" required></div>
+        <div class="form-group"><label>Deskripsi</label><textarea id="prodDesc" class="form-control" rows="3"></textarea></div>
+        <div class="form-group"><label>Kategori</label><input type="text" id="prodKategori" class="form-control"></div>
+        <div class="form-group"><label>Harga *</label><input type="number" id="prodHarga" class="form-control" required></div>
+        <div class="form-group"><label>Link Produk Digital</label><input type="url" id="prodLink" class="form-control" placeholder="https://..."></div>
+        <div class="form-group"><label>Status</label><select id="prodStatus" class="form-control"><option value="Aktif">Aktif</option><option value="Nonaktif">Nonaktif</option></select></div>
+        <div class="form-group"><label>Thumbnail URL</label><input type="text" id="prodThumbnail" class="form-control" placeholder="https://drive.google.com/..."></div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Simpan</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Verify Modal -->
+  <div id="verifyModal" class="modal">
+    <div class="modal-content">
+      <span style="position: absolute; top: 1rem; right: 1rem; cursor: pointer; font-size: 1.5rem;" id="closeVerifyModal">&times;</span>
+      <h3 style="margin-bottom: 1rem;">Verifikasi Pesanan</h3>
+      <input type="hidden" id="verifyIdPesanan">
+      <div id="verifyDetails" style="margin-bottom: 1rem;"></div>
+      <div style="display: flex; gap: 1rem;">
+        <button class="btn btn-secondary" id="verifyAccept" style="flex: 1;">✅ Terima & Generate Kode</button>
+        <button class="btn btn-danger" id="verifyReject" style="flex: 1;">❌ Tolak</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
