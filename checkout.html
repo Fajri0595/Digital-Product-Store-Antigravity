@@ -3,75 +3,248 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout - Digital Product Store</title>
+  <title>Checkout Pembelian — Digital Product Store</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <nav>
-    <div class="container">
-      <a href="index.html" class="logo">DigitalStore</a>
+  <!-- Modern Navigation Bar -->
+  <nav class="site-nav">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined" style="font-size: 20px;">token</span>
+        </div>
+        <span>Digital Product Store</span>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html#katalog" class="nav-link">Katalog Produk</a></li>
+        <li><a href="index.html#cara-kerja" class="nav-link">Cara Redeem</a></li>
+        <li><a href="testimonial.html" class="nav-link">Testimoni</a></li>
+        <li><a href="index.html#bantuan" class="nav-link">Bantuan</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="redeem.html" class="btn btn-outline btn-sm">
+          <span class="material-symbols-outlined" style="font-size: 16px;">key</span>
+          Tukar Kode Redeem
+        </a>
+      </div>
     </div>
   </nav>
 
-  <section>
-    <div class="container" style="max-width: 600px;">
-      <div class="section-title">
-        <h2>Selesaikan Pesanan Anda</h2>
-        <p>Akses langsung ke aset digital setelah konfirmasi transfer.</p>
+  <!-- Checkout Container -->
+  <main class="container" style="max-width: 580px; padding: 3rem 1.5rem 5rem;">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <div style="display: inline-flex; align-items: center; gap: 0.35rem; background: var(--surface-container); color: var(--primary-indigo); font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: var(--radius-full); margin-bottom: 0.75rem;">
+        <span class="material-symbols-outlined" style="font-size: 14px;">lock</span>
+        Checkout Pembelian Aman
+      </div>
+      <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">Selesaikan Pesanan Anda</h1>
+      <p style="color: var(--text-secondary); font-size: 0.9rem;">Dapatkan akses langsung ke aset digital setelah konfirmasi transfer.</p>
+    </div>
+
+    <!-- Product Summary Card -->
+    <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.5rem; box-shadow: var(--shadow-md); margin-bottom: 1.5rem;">
+      <div style="display: flex; gap: 1rem; align-items: center; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border-subtle);">
+        <div style="width: 64px; height: 64px; border-radius: var(--radius-lg); background: var(--surface-container); overflow: hidden; flex-shrink: 0;">
+          <img id="summaryThumb" src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=200&auto=format&fit=crop&q=80" alt="Produk" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <div style="flex: 1; min-width: 0;">
+          <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.25rem;">
+            <span class="badge badge-brand" style="font-size: 0.6875rem; padding: 0.15rem 0.5rem;">COMMERCIAL</span>
+            <span style="font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; color: var(--text-tertiary);">v2.4.0</span>
+          </div>
+          <h3 id="summaryTitle" style="font-size: 1.05rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Memuat produk...</h3>
+          <p style="font-size: 0.75rem; color: var(--text-tertiary);">Akses instan berkas .fig + Pembaruan seumur hidup</p>
+        </div>
       </div>
 
-      <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: var(--shadow);">
-        <form id="checkoutForm">
-          <input type="hidden" id="idProduk">
-          
-          <div class="form-group">
-            <label>Nama Produk</label>
-            <input type="text" id="namaProduk" class="form-control" readonly disabled>
+      <div style="padding-top: 1rem; font-size: 0.875rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem; color: var(--text-secondary);">
+          <span>Harga Normal Produk</span>
+          <span id="summaryOriginalPrice">Rp 0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; color: #f59e0b; font-weight: 600;">
+          <span style="display: flex; align-items: center; gap: 0.25rem;">
+            Kode Unik Verifikasi
+            <span class="material-symbols-outlined" style="font-size: 14px;" title="3 angka unik untuk verifikasi instan transfer otomatis">help</span>
+          </span>
+          <span id="summaryUniqueCode">+ Rp 293</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding-top: 0.75rem; border-top: 1px dashed var(--border-subtle);">
+          <span style="font-weight: 700; font-size: 1rem;">Total Transfer</span>
+          <div style="text-align: right;">
+            <span id="summaryTotalTransfer" style="font-family: 'Sora', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--primary-indigo);">Rp 0</span>
+            <div style="font-size: 0.6875rem; color: var(--text-tertiary);">Wajib transfer tepat hingga 3 digit terakhir</div>
           </div>
-
-          <div class="form-group">
-            <label>Total Pembayaran</label>
-            <input type="text" id="totalBayar" class="form-control" readonly disabled style="font-weight: bold; color: var(--primary);">
-          </div>
-
-          <div class="form-group">
-            <label for="namaCustomer">Nama Lengkap *</label>
-            <input type="text" id="namaCustomer" class="form-control" required placeholder="Budi Santoso">
-          </div>
-
-          <div class="form-group">
-            <label for="kontakCustomer">Email / No. WhatsApp *</label>
-            <input type="text" id="kontakCustomer" class="form-control" required placeholder="budi@example.com / 08123456789">
-          </div>
-
-          <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
-            <p style="font-weight: 600; margin-bottom: 0.5rem;">Instruksi Pembayaran:</p>
-            <p style="font-size: 0.875rem; color: var(--gray);">Transfer Bank BCA: <strong>8820192841</strong> (a.n. Digital Product Store)</p>
-          </div>
-
-          <button type="submit" class="btn btn-primary" style="width: 100%;">Konfirmasi & Pesan Sekarang</button>
-        </form>
+        </div>
       </div>
     </div>
-  </section>
+
+    <!-- Form Section -->
+    <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 2rem; box-shadow: var(--shadow-md);">
+      <form id="checkoutForm">
+        <input type="hidden" id="idProduk">
+        <input type="hidden" id="totalBayarInput">
+
+        <div class="form-group">
+          <label class="form-label" for="namaCustomer">Nama Lengkap *</label>
+          <div style="position: relative;">
+            <span class="material-symbols-outlined" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px;">person</span>
+            <input type="text" id="namaCustomer" class="form-control" style="padding-left: 2.5rem;" required placeholder="Budi Santoso">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="emailCustomer">Alamat Email * <span class="form-label-desc">(untuk arsip invoice & link download)</span></label>
+          <div style="position: relative;">
+            <span class="material-symbols-outlined" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px;">mail</span>
+            <input type="email" id="emailCustomer" class="form-control" style="padding-left: 2.5rem;" required placeholder="budi.santoso@example.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="kontakCustomer">Nomor WhatsApp * <span class="form-label-desc">(dispatch kode redeem instan & notifikasi)</span></label>
+          <div style="position: relative;">
+            <span class="material-symbols-outlined" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px;">chat</span>
+            <input type="tel" id="kontakCustomer" class="form-control" style="padding-left: 2.5rem;" required placeholder="0812-3456-7890">
+          </div>
+        </div>
+
+        <!-- Bank Transfer Instructions Accordion Box -->
+        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+            <span style="font-size: 0.8125rem; font-weight: 700; color: #92400e; display: flex; align-items: center; gap: 0.4rem;">
+              <span class="material-symbols-outlined" style="font-size: 18px;">account_balance</span>
+              Instruksi Transfer Bank & E-Wallet
+            </span>
+            <span class="badge" style="background: #fef3c7; color: #b45309; font-size: 0.6875rem;">Manual Checking</span>
+          </div>
+
+          <!-- BCA Card Item -->
+          <div style="background: #ffffff; border: 1px solid #fde68a; border-radius: var(--radius-md); padding: 0.85rem 1rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <strong style="color: #0060af; font-size: 0.8125rem; background: #e0f2fe; padding: 0.15rem 0.4rem; border-radius: 4px;">BCA</strong>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; font-weight: 700;">8820192841</span>
+              </div>
+              <div style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 0.15rem;">a.n. Digital Product Store</div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText('8820192841'); alert('Nomor Rekening BCA berhasil disalin!');">
+              <span class="material-symbols-outlined" style="font-size: 14px;">content_copy</span>
+              Salin
+            </button>
+          </div>
+
+          <!-- Alternatif Rekening -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.75rem; color: #78350f;">
+            <div style="background: rgba(255,255,255,0.7); padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid #fde68a;">
+              <strong>Bank Mandiri:</strong><br>
+              1370-0192-841
+            </div>
+            <div style="background: rgba(255,255,255,0.7); padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid #fde68a;">
+              <strong>QRIS All E-Wallet:</strong><br>
+              GoPay, OVO, Dana, Shopee
+            </div>
+          </div>
+
+          <div style="margin-top: 0.75rem; font-size: 0.75rem; color: #92400e; display: flex; align-items: flex-start; gap: 0.35rem;">
+            <span class="material-symbols-outlined" style="font-size: 15px; flex-shrink: 0; margin-top: 1px;">info</span>
+            <span>Harap sertakan nominal persis dengan angka unik (<strong id="instructionUniqueCode">293</strong>) agar sistem verifikasi kilat dapat mencocokkan pembayaran tanpa penundaan.</span>
+          </div>
+        </div>
+
+        <div style="background: var(--accent-info-bg); border: 1px solid var(--accent-info-border); border-radius: var(--radius-md); padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.75rem; font-size: 0.8125rem; color: #0369a1; margin-bottom: 1.5rem;">
+          <span class="material-symbols-outlined" style="font-size: 20px;">verified_user</span>
+          <span>Setelah transfer berhasil, admin akan memverifikasi bukti transaksi dan menerbitkan <strong>Kode Redeem unik</strong> Anda dalam <strong>5–15 menit</strong> via WhatsApp & Email.</span>
+        </div>
+
+        <button type="submit" id="btnSubmitCheckout" class="btn btn-primary btn-lg" style="width: 100%; font-size: 1rem;">
+          <span class="material-symbols-outlined">lock</span>
+          <span>Konfirmasi & Kirim Pesanan</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; font-size: 0.75rem; color: var(--text-tertiary);">
+          <span style="display: flex; align-items: center; gap: 0.25rem;"><span class="material-symbols-outlined" style="font-size: 14px;">encrypted</span> Enkripsi 256-Bit SSL</span>
+          <span>•</span>
+          <span style="display: flex; align-items: center; gap: 0.25rem;"><span class="material-symbols-outlined" style="font-size: 14px;">verified</span> Garansi Lisensi Asli</span>
+        </div>
+      </form>
+    </div>
+
+    <!-- Stepper Footer Indicator -->
+    <div class="stepper-row">
+      <div class="stepper-item active">
+        <div class="stepper-num">1</div>
+        <div>
+          <div>Isi Pesanan</div>
+          <div style="font-size: 0.6875rem; color: var(--primary-indigo);">Sedang Berjalan</div>
+        </div>
+      </div>
+      <span style="color: var(--border-subtle);">——</span>
+      <div class="stepper-item">
+        <div class="stepper-num">2</div>
+        <div>
+          <div>Transfer</div>
+          <div style="font-size: 0.6875rem;">Menunggu</div>
+        </div>
+      </div>
+      <span style="color: var(--border-subtle);">——</span>
+      <div class="stepper-item">
+        <div class="stepper-num">3</div>
+        <div>
+          <div>Verifikasi</div>
+          <div style="font-size: 0.6875rem;">5-15 Menit</div>
+        </div>
+      </div>
+      <span style="color: var(--border-subtle);">——</span>
+      <div class="stepper-item">
+        <div class="stepper-num">4</div>
+        <div>
+          <div>Redeem</div>
+          <div style="font-size: 0.6875rem;">Akses Aset</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Public Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="color: #ffffff; margin-bottom: 1rem;">
+            <div class="brand-icon">
+              <span class="material-symbols-outlined" style="font-size: 20px;">token</span>
+            </div>
+            <span>Digital Product Store</span>
+          </div>
+          <p>Platform distribusi instan aset digital dengan sistem kode redeem yang aman dan terintegrasi Google Workspace.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Kategori & Panduan</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#katalog">Semua Produk</a></li>
+            <li><a href="redeem.html">Validasi Redeem Token</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Layanan Pelanggan</h4>
+          <ul class="footer-links">
+            <li><a href="testimonial.html">Ulasan Pembeli</a></li>
+            <li><a href="#">Bantuan WhatsApp 24/7</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Digital Product Store. Hak cipta dilindungi undang-undang.</p>
+      </div>
+    </div>
+  </footer>
 
   <script src="js/app.js"></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get('id');
-      const nama = urlParams.get('name');
-      const harga = urlParams.get('price');
-
-      if (id) {
-        document.getElementById('idProduk').value = id;
-        document.getElementById('namaProduk').value = decodeURIComponent(nama || '');
-        document.getElementById('totalBayar').value = 'Rp ' + Number(harga || 0).toLocaleString('id-ID');
-      }
-
-      document.getElementById('checkoutForm').addEventListener('submit', handleCheckoutSubmit);
-    });
-  </script>
 </body>
 </html>

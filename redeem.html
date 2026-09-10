@@ -3,42 +3,221 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tukar Kode Redeem - Digital Product Store</title>
+  <title>Tukarkan Kode Redeem — Digital Product Store</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <nav>
-    <div class="container">
-      <a href="index.html" class="logo">DigitalStore</a>
+  <!-- Modern Navigation Bar -->
+  <nav class="site-nav">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined" style="font-size: 20px;">token</span>
+        </div>
+        <span>Digital Product Store</span>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html#katalog" class="nav-link">Katalog Produk</a></li>
+        <li><a href="index.html#cara-kerja" class="nav-link">Cara Redeem</a></li>
+        <li><a href="testimonial.html" class="nav-link">Testimoni</a></li>
+        <li><a href="index.html#bantuan" class="nav-link">Bantuan</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="redeem.html" class="btn btn-outline btn-sm active">
+          <span class="material-symbols-outlined" style="font-size: 16px;">key</span>
+          Tukar Kode Redeem
+        </a>
+        <a href="index.html#katalog" class="btn btn-primary btn-sm">
+          Jelajahi Produk
+        </a>
+      </div>
     </div>
   </nav>
 
-  <section>
-    <div class="container" style="max-width: 500px;">
-      <div class="section-title">
-        <h2>Tukarkan Kode Redeem</h2>
-        <p>Masukkan kode 16 karakter unik yang Anda dapatkan untuk membuka produk digital.</p>
+  <!-- Redeem Container -->
+  <main class="container" style="max-width: 540px; padding: 4rem 1.5rem 6rem;">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <div style="display: inline-flex; align-items: center; gap: 0.35rem; background: var(--surface-container); color: var(--primary-indigo); font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: var(--radius-full); margin-bottom: 1.5rem;">
+        <span class="badge-dot" style="background: var(--accent-success);"></span>
+        Sistem Aktivasi Otomatis v2.4 • SYNC-READY
       </div>
 
-      <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: var(--shadow);">
-        <form id="redeemForm">
-          <div class="form-group">
-            <label for="kodeRedeem">Kode Redeem Digital *</label>
-            <input type="text" id="kodeRedeem" class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX" required style="font-family: monospace; font-size: 1.125rem; text-transform: uppercase;">
+      <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--brand-gradient); display: flex; align-items: center; justify-content: center; color: #ffffff; margin: 0 auto 1.25rem; box-shadow: var(--shadow-glow);">
+        <span class="material-symbols-outlined" style="font-size: 28px;">vpn_key</span>
+      </div>
+
+      <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">Tukarkan Kode Redeem Anda</h1>
+      <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+        Masukkan kode redeem 16 karakter unik yang Anda peroleh setelah pesanan diverifikasi untuk membuka akses file digital langsung dari Google Drive.
+      </p>
+    </div>
+
+    <!-- Form Card -->
+    <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-2xl); padding: 2rem; box-shadow: var(--shadow-lg);">
+      <form id="redeemForm">
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <label class="form-label" for="kodeRedeem" style="margin-bottom: 0;">Kode Redeem Digital *</label>
+            <span id="charCount" style="font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; color: var(--text-tertiary);">0/19</span>
           </div>
 
-          <button type="submit" class="btn btn-primary" style="width: 100%;">Buka Akses Produk</button>
-        </form>
+          <div style="position: relative;">
+            <span class="material-symbols-outlined" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--primary-indigo); font-size: 20px;">lock_open</span>
+            <input type="text" id="kodeRedeem" class="form-control" placeholder="RED-XXXX-XXXX-XX" required 
+                   style="padding-left: 2.6rem; padding-right: 4.5rem; font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+            <button type="button" id="btnSampleCode" style="position: absolute; right: 0.6rem; top: 50%; transform: translateY(-50%); background: var(--surface-container); border: none; font-size: 0.6875rem; font-weight: 600; color: var(--primary-indigo); padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer;">
+              Sample
+            </button>
+          </div>
 
-        <div id="redeemResult" style="display: none; margin-top: 1.5rem; padding: 1rem; border-radius: 0.5rem;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.4rem; font-size: 0.75rem; color: var(--text-tertiary);">
+            <span>Format: RED-XXXX-XXXX-XX</span>
+            <button type="button" id="btnPasteClip" style="background: none; border: none; color: var(--primary-indigo); cursor: pointer; display: flex; align-items: center; gap: 0.2rem; font-size: 0.75rem;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">content_paste</span> Tempel
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="btnSubmitRedeem" class="btn btn-primary btn-lg" style="width: 100%; font-size: 1rem; margin-top: 0.5rem;">
+          <span class="material-symbols-outlined">lock_open</span>
+          <span>Buka Akses Produk Digital</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </form>
+
+      <!-- Status API Simulation Buttons (For testing/demo purposes as shown in wireframe) -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-subtle); font-size: 0.75rem; color: var(--text-tertiary);">
+        <span>Simulasi Status API:</span>
+        <div style="display: flex; gap: 0.4rem;">
+          <button type="button" class="btn btn-secondary btn-sm" id="simSuccess" style="padding: 0.2rem 0.5rem; font-size: 0.6875rem;">Sukses</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="simError" style="padding: 0.2rem 0.5rem; font-size: 0.6875rem;">Error</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="simLoading" style="padding: 0.2rem 0.5rem; font-size: 0.6875rem;">Memuat</button>
+        </div>
+      </div>
+
+      <!-- Result Card (Shown on success) -->
+      <div id="redeemSuccessResult" style="display: none; margin-top: 1.75rem; background: var(--accent-success-bg); border: 1.5px solid var(--accent-success-border); border-radius: var(--radius-xl); padding: 1.5rem; animation: modalFadeIn 0.3s ease;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent-success); color: #ffffff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <span class="material-symbols-outlined" style="font-size: 22px;">check</span>
+          </div>
+          <div>
+            <span class="badge badge-success" style="font-size: 0.6875rem; padding: 0.15rem 0.5rem; margin-bottom: 0.2rem;">• Terverifikasi Realtime</span>
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: #065f46;">Kode Berhasil Diverifikasi!</h3>
+            <p style="font-size: 0.75rem; color: #047857;">Hak akses penuh telah diaktifkan untuk akun pembeli Anda.</p>
+          </div>
+        </div>
+
+        <!-- Product Unlocked Box -->
+        <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1rem; margin-bottom: 1rem;">
+          <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.75rem;">
+            <div style="width: 48px; height: 48px; border-radius: var(--radius-md); background: var(--surface-container); overflow: hidden; flex-shrink: 0;">
+              <img id="unlockedThumb" src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=200&auto=format&fit=crop&q=80" alt="Produk" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div>
+              <div id="unlockedTitle" style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">Figma UI Kit Pro 2025</div>
+              <div style="font-size: 0.75rem; color: var(--text-tertiary); display: flex; align-items: center; gap: 0.5rem; margin-top: 0.15rem;">
+                <span style="display: flex; align-items: center; gap: 0.2rem;"><span class="material-symbols-outlined" style="font-size: 14px;">folder</span> 140 MB (.fig & .zip)</span>
+                <span>•</span>
+                <span style="color: var(--accent-success); font-weight: 600;">✓ Lisensi Tim Aktif</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: var(--surface-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.5rem 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <div style="font-size: 0.625rem; font-weight: 700; letter-spacing: 0.05em; color: var(--text-tertiary); text-transform: uppercase;">PERSONAL LICENSE KEY</div>
+              <div id="unlockedKey" style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; font-weight: 700; color: var(--primary-indigo);">FG-PRO-2025-9941-LIFETIME</div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('unlockedKey').textContent); alert('License Key disalin!');" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">
+              <span class="material-symbols-outlined" style="font-size: 14px;">content_copy</span> Salin
+            </button>
+          </div>
+        </div>
+
+        <a id="btnDownloadGDrive" href="#" target="_blank" class="btn btn-success btn-lg" style="width: 100%; margin-bottom: 0.5rem; font-size: 0.95rem;">
+          <span class="material-symbols-outlined">cloud_download</span>
+          <span>Download Aset Google Drive</span>
+          <span class="material-symbols-outlined">open_in_new</span>
+        </a>
+
+        <button type="button" id="btnCopyFallbackLink" class="btn btn-secondary" style="width: 100%; font-size: 0.8125rem;">
+          <span class="material-symbols-outlined" style="font-size: 16px;">link</span>
+          <span>Salin Link Akses Cadangan</span>
+        </button>
+
+        <p style="font-size: 0.6875rem; color: #047857; text-align: center; margin-top: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 0.35rem;">
+          <span class="material-symbols-outlined" style="font-size: 14px;">lock</span>
+          Tautan unduhan aman ini valid selamanya untuk akun Google Anda.
+        </p>
+      </div>
+
+      <!-- Error Result Box -->
+      <div id="redeemErrorResult" style="display: none; margin-top: 1.5rem; background: var(--accent-danger-bg); border: 1.5px solid var(--accent-danger-border); border-radius: var(--radius-xl); padding: 1.25rem; animation: modalFadeIn 0.3s ease;">
+        <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+          <span class="material-symbols-outlined" style="color: var(--accent-danger); font-size: 24px;">error</span>
+          <div>
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: #9f1239; margin-bottom: 0.25rem;">Gagal Menukarkan Kode</h4>
+            <p id="redeemErrorText" style="font-size: 0.8125rem; color: #be123c;">Kode redeem tidak valid atau belum diverifikasi oleh admin.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Security & Sync Banner -->
+    <div style="margin-top: 2rem; background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.25rem; text-align: center; box-shadow: var(--shadow-sm);">
+      <div style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+        <span class="material-symbols-outlined" style="color: var(--accent-success); font-size: 18px;">sync_saved_locally</span>
+        Koneksi terenkripsi langsung dengan <strong>Google Sheets Database</strong> & <strong>Google Drive Storage</strong>.
+      </div>
+      <div style="display: flex; justify-content: center; gap: 2rem; font-size: 0.75rem; color: var(--text-tertiary);">
+        <span>🔒 Enkripsi AES-256</span>
+        <span>•</span>
+        <span>⚡ Akses Instan < 2 Detik</span>
+        <span>•</span>
+        <a href="testimonial.html" style="color: var(--primary-indigo); font-weight: 600;">FAQ Redeem ↗</a>
       </div>
     </div>
-  </section>
+  </main>
+
+  <!-- Public Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="color: #ffffff; margin-bottom: 1rem;">
+            <div class="brand-icon">
+              <span class="material-symbols-outlined" style="font-size: 20px;">token</span>
+            </div>
+            <span>Digital Product Store</span>
+          </div>
+          <p>Platform distribusi instan aset digital dengan sistem verifikasi kode redeem otomatis.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Kategori & Panduan</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#katalog">Semua Produk</a></li>
+            <li><a href="redeem.html">Portal Validasi Token</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Layanan Pelanggan</h4>
+          <ul class="footer-links">
+            <li><a href="testimonial.html">Ulasan Pembeli</a></li>
+            <li><a href="#">Dukungan 24/7</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Digital Product Store. Hak cipta dilindungi undang-undang.</p>
+      </div>
+    </div>
+  </footer>
 
   <script src="js/app.js"></script>
-  <script>
-    document.getElementById('redeemForm').addEventListener('submit', handleRedeemSubmit);
-  </script>
 </body>
 </html>

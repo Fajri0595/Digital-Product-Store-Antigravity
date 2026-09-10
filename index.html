@@ -3,96 +3,270 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Product Store - Akselerasi Karya Digital Anda</title>
+  <title>Digital Product Store — Akselerasi Karya Digital Anda</title>
+  <meta name="description" content="Platform distribusi instan aset digital, lisensi perangkat lunak, dan template premium terkurasi dengan sistem verifikasi kode redeem otomatis.">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav>
-    <div class="container">
-      <a href="index.html" class="logo">DigitalStore</a>
-      <ul class="nav-links">
-        <li><a href="#katalog">Katalog</a></li>
-        <li><a href="redeem.html">Tukar Kode</a></li>
-        <li><a href="admin.html" class="btn btn-outline">Admin</a></li>
+  <!-- Top Announcement Bar -->
+  <div style="background: #0f0e26; color: #c0c1ff; font-size: 0.75rem; padding: 0.4rem 1rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.08);">
+    ✨ <strong>Update Terbaru:</strong> Integrasi Webhook Google Apps Script Real-Time & Auto-Generated Redeem Codes Aktif.
+  </div>
+
+  <!-- Modern Navigation Bar -->
+  <nav class="site-nav">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined" style="font-size: 20px;">token</span>
+        </div>
+        <span>Digital Product Store</span>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link active">Katalog Produk</a></li>
+        <li><a href="#cara-kerja" class="nav-link">Cara Redeem</a></li>
+        <li><a href="testimonial.html" class="nav-link">Testimoni</a></li>
+        <li><a href="#bantuan" class="nav-link">Bantuan</a></li>
       </ul>
+
+      <div class="nav-actions">
+        <a href="redeem.html" class="btn btn-outline btn-sm">
+          <span class="material-symbols-outlined" style="font-size: 16px;">key</span>
+          Tukar Kode Redeem
+        </a>
+        <a href="#katalog" class="btn btn-primary btn-sm">
+          Jelajahi Produk
+        </a>
+        <a href="admin.html" title="Admin Console" style="color: var(--text-tertiary); display: flex; align-items: center; padding: 0.4rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+          <span class="material-symbols-outlined" style="font-size: 18px;">admin_panel_settings</span>
+        </a>
+      </div>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="hero">
+  <!-- Hero Section -->
+  <header class="hero-section">
     <div class="container">
-      <h1>Akselerasi Karya Digital Anda</h1>
-      <p>Koleksi template Notion, Figma UI Kit, skrip otomasi, dan panduan digital eksklusif siap pakai dengan akses instan.</p>
-      <a href="#katalog" class="btn btn-secondary" style="font-size: 1rem; padding: 1rem 2rem;">Jelajahi Produk</a>
+      <div class="hero-pill">
+        <span class="hero-pill-dot"></span>
+        Distribusi Instan & Berlisensi Resmi
+      </div>
+
+      <h1 class="hero-title">
+        Akselerasi Karya Digital Anda dengan <br>
+        <span class="gradient-text">Aset Kelas Dunia</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        Koleksi template Notion, Figma UI Kit, skrip otomasi, dan panduan digital eksklusif siap pakai dengan akses instan Google Drive.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#katalog" class="btn btn-primary btn-lg">
+          <span class="material-symbols-outlined">explore</span>
+          Jelajahi Katalog
+        </a>
+        <a href="#cara-kerja" class="btn btn-secondary btn-lg">
+          <span class="material-symbols-outlined">verified_user</span>
+          Cara Kerja Kode Redeem
+        </a>
+      </div>
+
+      <div class="hero-trust-row">
+        <div class="hero-trust-item">
+          <span class="material-symbols-outlined">bolt</span>
+          <span>Verifikasi Otomatis</span>
+        </div>
+        <span>•</span>
+        <div class="hero-trust-item">
+          <span class="material-symbols-outlined">cloud_download</span>
+          <span>Akses Langsung GDrive</span>
+        </div>
+        <span>•</span>
+        <div class="hero-trust-item">
+          <span class="material-symbols-outlined">support_agent</span>
+          <span>Dukungan 24/7</span>
+        </div>
+      </div>
+
+      <!-- 3 Key Trust Metric Cards -->
+      <div class="trust-cards-grid">
+        <div class="trust-card">
+          <div class="trust-card-icon">
+            <span class="material-symbols-outlined">folder_zip</span>
+          </div>
+          <div>
+            <h3>500+ Aset Terkirim</h3>
+            <p>Akses seumur hidup & update berkala tanpa biaya langganan tambahan.</p>
+          </div>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" style="color: #f59e0b; background: #fffbeb;">
+            <span class="material-symbols-outlined">star</span>
+          </div>
+          <div>
+            <h3>4.9 / 5.0 Rating</h3>
+            <p>Dipercaya oleh 1.200+ kreator, developer, & konsultan digital.</p>
+          </div>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-card-icon" style="color: var(--accent-success); background: var(--accent-success-bg);">
+            <span class="material-symbols-outlined">vpn_key</span>
+          </div>
+          <div>
+            <h3>Instan Redeem</h3>
+            <p>Buka tautan Google Drive resmi dengan kode unik tanpa ribet registrasi akun.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </header>
 
-  <!-- Features -->
-  <section class="features">
+  <!-- Product Catalog Section -->
+  <section class="catalog-section" id="katalog">
     <div class="container">
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">📁</div>
-          <h3>500+ Aset Tersedia</h3>
-          <p>Ribuan template premium, UI kit, dan tools yang selalu diperbarui setiap minggu.</p>
+      <div class="section-head">
+        <div>
+          <span class="section-badge">KATALOG TERKURASI</span>
+          <h2 class="section-title">Koleksi Produk Pilihan</h2>
+          <p class="section-subtitle">Dapatkan aset digital original dengan lisensi komersial terjamin.</p>
         </div>
-        <div class="feature-card">
-          <div class="feature-icon">⭐</div>
-          <h3>Rating 4.9/5</h3>
-          <p>Ribuan pelanggan puas memberi testimonial positif tentang kualitas kami.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">⚡</div>
-          <h3>Instan Redeem</h3>
-          <p>Akses langsung setelah transfer, gunakan kode redeem untuk dapatkan produk.</p>
+        
+        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--text-tertiary);">
+          <span>Urutkan:</span>
+          <select id="sortSelect" class="form-control" style="width: auto; padding: 0.4rem 0.8rem; font-size: 0.8125rem;">
+            <option value="popular">Terpopuler</option>
+            <option value="price-low">Harga: Rendah ke Tinggi</option>
+            <option value="price-high">Harga: Tinggi ke Rendah</option>
+          </select>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Product Catalog -->
-  <section id="katalog">
-    <div class="container">
-      <div class="section-title">
-        <h2>Koleksi Produk Pilihan</h2>
-        <p>Dapatkan aset digital original dengan lisensi komersial terjamin.</p>
+      <!-- Filter Bar: Search + Category Pills -->
+      <div class="catalog-filter-bar">
+        <div class="search-input-wrap">
+          <span class="material-symbols-outlined">search</span>
+          <input type="text" id="searchInput" class="search-input" placeholder="Cari aset: Notion, Figma, Canva, Skrip Python, Blender...">
+        </div>
+
+        <div class="category-pills" id="categoryPills">
+          <button class="category-pill active" data-cat="all">Semua</button>
+          <button class="category-pill" data-cat="UI & Design System">UI & Design System</button>
+          <button class="category-pill" data-cat="Productivity & Notion">Productivity & Notion</button>
+          <button class="category-pill" data-cat="Automation Scripts">Automation Scripts</button>
+          <button class="category-pill" data-cat="3D & Blender">3D & Blender</button>
+          <button class="category-pill" data-cat="E-Books">E-Books</button>
+        </div>
       </div>
+
+      <!-- Grid Cards -->
       <div class="product-grid" id="productGrid">
-        <div class="loading">Memuat produk...</div>
+        <!-- Rendered via js/app.js -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--text-tertiary);">
+          <span class="material-symbols-outlined" style="font-size: 3rem; animation: spin 1.5s infinite linear;">sync</span>
+          <p style="margin-top: 1rem; font-weight: 500;">Memuat katalog produk resmi...</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- How It Works Bento Box (Sistem Redeem Aman & Tanpa Akun Rumit) -->
+  <section class="container" id="cara-kerja" style="padding-bottom: 2rem;">
+    <div class="how-it-works-box">
+      <div>
+        <span class="how-info-tag">
+          <span class="material-symbols-outlined" style="font-size: 14px;">bolt</span>
+          Alur Pembelian 60 Detik
+        </span>
+        <h2 class="how-title">Sistem Redeem Aman & Tanpa Akun Rumit</h2>
+        <p class="how-desc">
+          Tidak perlu menghafal kata sandi atau melalui formulir pendaftaran panjang. Setiap transaksi menghasilkan kode unik yang memberi Anda akses file instan ke cloud penyimpanan selamanya.
+        </p>
+        <a href="redeem.html" class="btn btn-primary btn-lg">
+          <span>Coba Masukkan Kode Redeem</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+      </div>
+
+      <div class="how-steps-grid">
+        <div class="how-step-card">
+          <div class="how-step-num">1</div>
+          <h4>Pilih Produk</h4>
+          <p>Temukan template atau tool digital yang cocok untuk proyek Anda.</p>
+        </div>
+
+        <div class="how-step-card">
+          <div class="how-step-num">2</div>
+          <h4>Pembayaran Kilat</h4>
+          <p>Bayar via QRIS, GoPay, OVO, atau transfer bank terverifikasi.</p>
+        </div>
+
+        <div class="how-step-card">
+          <div class="how-step-num">3</div>
+          <h4>Dapatkan Token</h4>
+          <p>Kode unik 12–16 digit langsung dikirim ke WhatsApp / Email Anda.</p>
+        </div>
+
+        <div class="how-step-card">
+          <div class="how-step-num">4</div>
+          <h4>Akses File GDrive</h4>
+          <p>Masukkan token di halaman Redeem dan download aset Anda instan.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer>
+  <!-- Public Footer -->
+  <footer class="site-footer" id="bantuan">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>DigitalStore</h4>
-          <p>Platform distribusi instan aset digital dengan sistem kode redeem yang aman.</p>
+      <div class="footer-top-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="color: #ffffff; margin-bottom: 1rem;">
+            <div class="brand-icon">
+              <span class="material-symbols-outlined" style="font-size: 20px;">token</span>
+            </div>
+            <span>Digital Product Store</span>
+          </div>
+          <p>Platform distribusi instan aset digital, lisensi perangkat lunak, dan voucher premium terkurasi dengan sistem verifikasi otomatis.</p>
+          <div class="footer-sync-badge">
+            <span class="material-symbols-outlined" style="font-size: 16px; color: var(--accent-success);">cloud_done</span>
+            Powered by Google Sheets & Drive
+          </div>
         </div>
+
         <div class="footer-col">
-          <h4>Navigasi</h4>
-          <ul>
-            <li><a href="#katalog">Katalog Produk</a></li>
-            <li><a href="redeem.html">Tukar Kode</a></li>
-            <li><a href="testimonial.html">Berikan Testimoni</a></li>
+          <h4>Kategori & Panduan</h4>
+          <ul class="footer-links">
+            <li><a href="#katalog">Lisensi Software & SaaS</a></li>
+            <li><a href="#katalog">Template UI & Kode Sumber</a></li>
+            <li><a href="redeem.html">Panduan Aktivasi Kode Instan</a></li>
+            <li><a href="redeem.html">Portal Validasi Redeem Token</a></li>
           </ul>
         </div>
+
         <div class="footer-col">
-          <h4>Kontak</h4>
-          <ul>
-            <li>support@digitalstore.id</li>
-            <li>Bangun oleh tim passionate</li>
+          <h4>Layanan Pelanggan</h4>
+          <ul class="footer-links">
+            <li><a href="#">Pusat Bantuan & FAQ</a></li>
+            <li><a href="testimonial.html">Testimoni & Ulasan Pembeli</a></li>
+            <li><a href="#">Kebijakan Pengembalian & Garansi</a></li>
+            <li><a href="https://wa.me/" target="_blank">Hubungi Dukungan 24/7</a></li>
           </ul>
         </div>
       </div>
+
       <div class="footer-bottom">
-        &copy; 2025 Digital Product Store. Hak cipta dilindungi.
+        <p>&copy; 2025 Digital Product Store. Hak cipta dilindungi undang-undang.</p>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="#">Syarat & Ketentuan</a>
+          <a href="#">Privasi</a>
+        </div>
       </div>
     </div>
   </footer>

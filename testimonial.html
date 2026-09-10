@@ -3,72 +3,241 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Berikan Testimoni - Digital Product Store</title>
+  <title>Kirim Testimoni Pembeli — Digital Product Store</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <nav>
-    <div class="container">
-      <a href="index.html" class="logo">DigitalStore</a>
+  <!-- Modern Navigation Bar -->
+  <nav class="site-nav">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined" style="font-size: 20px;">token</span>
+        </div>
+        <span>Digital Product Store</span>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html#katalog" class="nav-link">Katalog Produk</a></li>
+        <li><a href="index.html#cara-kerja" class="nav-link">Cara Redeem</a></li>
+        <li><a href="testimonial.html" class="nav-link active">Testimoni</a></li>
+        <li><a href="index.html#bantuan" class="nav-link">Bantuan</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="redeem.html" class="btn btn-outline btn-sm">
+          <span class="material-symbols-outlined" style="font-size: 16px;">key</span>
+          Tukar Kode Redeem
+        </a>
+        <a href="index.html#katalog" class="btn btn-primary btn-sm">
+          Jelajahi Produk
+        </a>
+      </div>
     </div>
   </nav>
 
-  <section>
-    <div class="container" style="max-width: 600px;">
-      <div class="section-title">
-        <h2>Berikan Testimoni</h2>
-        <p>Bantu pembeli lain dengan berbagi pengalaman Anda.</p>
-      </div>
+  <!-- Main Container -->
+  <main class="container" style="max-width: 600px; padding: 3rem 1.5rem 5rem;">
+    <!-- Top Back Link & Status Badge -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+      <a href="index.html" style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.8125rem; color: var(--text-tertiary); font-weight: 500;">
+        <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
+        Kembali ke Semua Testimoni
+      </a>
+      <span class="badge" style="background: rgba(99, 102, 241, 0.1); color: var(--primary-indigo); font-size: 0.6875rem;">
+        • VERIFIED REVIEWS ONLY
+      </span>
+    </div>
 
-      <div style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: var(--shadow);">
-        <form id="testimonialForm">
-          <div class="form-group">
-            <label for="idProduk">Produk yang dibeli *</label>
-            <select id="idProduk" class="form-control" required>
-              <option value="">Pilih...</option>
+    <!-- Header Icon & Title -->
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <div style="width: 52px; height: 52px; border-radius: var(--radius-xl); background: var(--surface-container); color: var(--primary-indigo); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;">
+        <span class="material-symbols-outlined" style="font-size: 28px;">rate_review</span>
+      </div>
+      <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">Bagikan Pengalaman Anda</h1>
+      <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+        Testimoni Anda sangat berharga bagi kreator dan membantu calon pembeli lain memilih produk digital terbaik secara objektif.
+      </p>
+    </div>
+
+    <!-- Testimonial Form Card -->
+    <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-2xl); padding: 2rem; box-shadow: var(--shadow-lg); margin-bottom: 3.5rem;">
+      <form id="testimonialForm">
+        <!-- Select Product -->
+        <div class="form-group">
+          <label class="form-label" for="idProduk">Pilih Produk yang Anda Beli *</label>
+          <div style="position: relative;">
+            <span class="material-symbols-outlined" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px;">storefront</span>
+            <select id="idProduk" class="form-control" style="padding-left: 2.5rem;" required>
+              <option value="">Pilih salah satu produk digital...</option>
             </select>
           </div>
+        </div>
 
-          <div class="form-group">
-            <label for="namaCustomer">Nama Saya *</label>
-            <input type="text" id="namaCustomer" class="form-control" required placeholder="Nama">
+        <!-- Rating Stars Box -->
+        <div style="background: var(--surface-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.8125rem; font-weight: 700; color: var(--text-primary);">Penilaian Kualitas Produk *</span>
+            <span id="ratingScoreText" style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; font-weight: 700; color: var(--primary-indigo); background: #ffffff; padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid var(--border-subtle);">
+              5.0 / 5.0
+            </span>
           </div>
 
-          <div class="form-group">
-            <label for="emailCustomer">Email (opsional)</label>
-            <input type="email" id="emailCustomer" class="form-control" placeholder="email@example.com">
+          <div id="ratingInput" style="display: flex; gap: 0.5rem; font-size: 2rem; color: #f59e0b; cursor: pointer; margin-bottom: 0.4rem;">
+            <span class="star" data-rating="1">★</span>
+            <span class="star" data-rating="2">★</span>
+            <span class="star" data-rating="3">★</span>
+            <span class="star" data-rating="4">★</span>
+            <span class="star" data-rating="5">★</span>
           </div>
+          <input type="hidden" id="rating" value="5" required>
+          <div id="ratingLabel" style="font-size: 0.75rem; color: var(--primary-indigo); font-weight: 600;">
+            Luar Biasa! Sangat Memuaskan & Melebihi Ekspektasi
+          </div>
+        </div>
 
+        <!-- Name & Profession Row -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="form-group">
-            <label>Rating *</label>
-            <div id="ratingInput" style="font-size: 2rem; cursor: pointer;">
-              <span class="star" data-rating="1">★</span>
-              <span class="star" data-rating="2">★</span>
-              <span class="star" data-rating="3">★</span>
-              <span class="star" data-rating="4">★</span>
-              <span class="star" data-rating="5">★</span>
+            <label class="form-label" for="namaCustomer">Nama Lengkap / Panggilan *</label>
+            <div style="position: relative;">
+              <span class="material-symbols-outlined" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px;">person</span>
+              <input type="text" id="namaCustomer" class="form-control" style="padding-left: 2.5rem;" required placeholder="Contoh: Siti Rahmawati">
             </div>
-            <input type="hidden" id="rating" value="0" required>
           </div>
 
           <div class="form-group">
-            <label for="isiTestimoni">Ulasan *</label>
-            <textarea id="isiTestimoni" class="form-control" rows="5" placeholder="Ceritakan pengalaman Anda..." required></textarea>
+            <label class="form-label" for="profesiCustomer">Profesi / Peran *</label>
+            <div style="position: relative;">
+              <span class="material-symbols-outlined" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px;">badge</span>
+              <input type="text" id="profesiCustomer" class="form-control" style="padding-left: 2.5rem;" placeholder="Contoh: Senior UI/UX Designer">
+            </div>
           </div>
+        </div>
 
-          <button type="submit" class="btn btn-primary" style="width: 100%;">Kirim Testimoni</button>
-        </form>
+        <div class="form-group">
+          <label class="form-label" for="emailCustomer">Email Akun Pembelian <span class="form-label-desc">(opsional, untuk verifikasi)</span></label>
+          <div style="position: relative;">
+            <span class="material-symbols-outlined" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px;">mail</span>
+            <input type="email" id="emailCustomer" class="form-control" style="padding-left: 2.5rem;" placeholder="siti.ui@designstudio.id">
+          </div>
+        </div>
+
+        <!-- Review Text with Character Count -->
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <label class="form-label" for="isiTestimoni" style="margin-bottom: 0;">Ulasan & Pengalaman Menggunakan Produk *</label>
+            <span id="reviewCharCount" style="font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; color: var(--text-tertiary);">0 / 500 karakter</span>
+          </div>
+          <textarea id="isiTestimoni" class="form-control" rows="4" maxlength="500" required 
+                    placeholder="Ceritakan bagaimana produk ini mempercepat alur kerja atau hasil proyek nyata Anda..."></textarea>
+          <div style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 0.35rem; display: flex; align-items: center; gap: 0.25rem;">
+            <span class="material-symbols-outlined" style="font-size: 14px;">lightbulb</span>
+            Tips: Sebutkan fitur yang paling membantu atau metrik keberhasilan (misal: pengerjaan 2x lebih cepat).
+          </div>
+        </div>
+
+        <!-- Transparency Moderation Notice -->
+        <div style="background: var(--surface-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1rem; display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem;">
+          <span class="material-symbols-outlined" style="color: var(--primary-indigo); font-size: 22px;">verified_user</span>
+          <div style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4;">
+            <strong>Transparansi & Sistem Moderasi:</strong><br>
+            Ulasan Anda akan masuk ke antrean status <span class="badge badge-pending" style="font-size: 0.6875rem; padding: 0.1rem 0.4rem;">Menunggu Moderasi</span> di dashboard admin dan diverifikasi terlebih dahulu sebelum diterbitkan ke halaman produk publik.
+          </div>
+        </div>
+
+        <button type="submit" id="btnSubmitReview" class="btn btn-primary btn-lg" style="width: 100%; font-size: 1rem;">
+          <span class="material-symbols-outlined">send</span>
+          <span>Kirim Ulasan untuk Moderasi</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Verified Inspiration Testimonial Cards Section -->
+    <section>
+      <div style="margin-bottom: 1.25rem;">
+        <span class="badge" style="background: var(--brand-gradient-subtle); color: var(--primary-indigo); font-size: 0.75rem; margin-bottom: 0.35rem;">
+          ✨ Inspirasi Testimoni
+        </span>
+        <h2 style="font-size: 1.35rem; font-weight: 700;">Ulasan Pembeli Terverifikasi</h2>
+        <p style="font-size: 0.8125rem; color: var(--text-secondary);">Lihat contoh ulasan berbobot yang baru saja disetujui kurator kami.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <!-- Card 1 -->
+        <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.25rem; box-shadow: var(--shadow-sm);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <div style="color: #f59e0b; font-size: 0.9rem;">★★★★★</div>
+            <span class="badge badge-success" style="font-size: 0.6875rem; padding: 0.1rem 0.4rem;">• Verified</span>
+          </div>
+          <p style="font-size: 0.8125rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; line-height: 1.5;">
+            "Figma UI Kit Pro ini memotong waktu sprint desain kami lebih dari 60%. Token sistem dan varian komponennya sangat terstruktur untuk tim skala menengah."
+          </p>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #e0e7ff; color: #4338ca; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem;">AP</div>
+            <div>
+              <div style="font-size: 0.8125rem; font-weight: 700;">Ardelia Prameswari</div>
+              <div style="font-size: 0.6875rem; color: var(--text-tertiary);">Lead Product Designer</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.25rem; box-shadow: var(--shadow-sm);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <div style="color: #f59e0b; font-size: 0.9rem;">★★★★★</div>
+            <span class="badge badge-success" style="font-size: 0.6875rem; padding: 0.1rem 0.4rem;">• Verified</span>
+          </div>
+          <p style="font-size: 0.8125rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; line-height: 1.5;">
+            "Template Notion OS ini luar biasa. Fitur automated OKR dashboard dan tracking proyeknya langsung saya implementasikan ke seluruh divisi agensi."
+          </p>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: #fef3c7; color: #92400e; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem;">DS</div>
+            <div>
+              <div style="font-size: 0.8125rem; font-weight: 700;">Dimas Suryo Utomo</div>
+              <div style="font-size: 0.6875rem; color: var(--text-tertiary);">Founder, PixelCraft Studio</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Public Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="color: #ffffff; margin-bottom: 1rem;">
+            <div class="brand-icon">
+              <span class="material-symbols-outlined" style="font-size: 20px;">token</span>
+            </div>
+            <span>Digital Product Store</span>
+          </div>
+          <p>Platform distribusi instan aset digital dengan sistem ulasan objektif & terverifikasi.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Kategori</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#katalog">Semua Aset Digital</a></li>
+            <li><a href="redeem.html">Validasi Redeem Token</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Bantuan</h4>
+          <ul class="footer-links">
+            <li><a href="#">FAQ Ulasan</a></li>
+            <li><a href="#">Dukungan 24/7</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Digital Product Store. Hak cipta dilindungi undang-undang.</p>
       </div>
     </div>
-  </section>
+  </footer>
 
   <script src="js/app.js"></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      loadProductsForTestimoni();
-      setupRatingInput();
-    });
-  </script>
 </body>
 </html>

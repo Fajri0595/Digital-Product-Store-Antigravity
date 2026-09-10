@@ -3,46 +3,266 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detail Produk - Digital Product Store</title>
+  <title>Detail Produk — Digital Product Store</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <nav>
-    <div class="container">
-      <a href="index.html" class="logo">DigitalStore</a>
-      <ul class="nav-links">
-        <li><a href="index.html">Katalog</a></li>
-        <li><a href="redeem.html">Tukar Kode</a></li>
+  <!-- Modern Navigation Bar -->
+  <nav class="site-nav">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <span class="material-symbols-outlined" style="font-size: 20px;">token</span>
+        </div>
+        <span>Digital Product Store</span>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html#katalog" class="nav-link">Katalog Produk</a></li>
+        <li><a href="index.html#cara-kerja" class="nav-link">Cara Redeem</a></li>
+        <li><a href="testimonial.html" class="nav-link">Testimoni</a></li>
+        <li><a href="index.html#bantuan" class="nav-link">Bantuan</a></li>
       </ul>
+
+      <div class="nav-actions">
+        <a href="redeem.html" class="btn btn-outline btn-sm">
+          <span class="material-symbols-outlined" style="font-size: 16px;">key</span>
+          Tukar Kode Redeem
+        </a>
+        <a href="index.html#katalog" class="btn btn-primary btn-sm">
+          Jelajahi Produk
+        </a>
+      </div>
     </div>
   </nav>
 
-  <section>
-    <div class="container" id="productDetailContainer">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
-        <div>
-          <img id="detailThumbnail" src="https://via.placeholder.com/600x400" alt="Thumbnail" style="border-radius: 1rem; width: 100%;">
+  <!-- Main Content -->
+  <main class="container" style="padding: 2.5rem 1.5rem 5rem;">
+    <!-- Breadcrumbs -->
+    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--text-tertiary); margin-bottom: 2rem;">
+      <a href="index.html">Beranda</a>
+      <span class="material-symbols-outlined" style="font-size: 14px;">chevron_right</span>
+      <span id="breadcrumbCategory">Katalog</span>
+      <span class="material-symbols-outlined" style="font-size: 14px;">chevron_right</span>
+      <span id="breadcrumbName" style="color: var(--text-primary); font-weight: 600;">Detail Produk</span>
+    </div>
+
+    <!-- Product Detail Layout (2 Columns) -->
+    <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 3rem; align-items: start; margin-bottom: 4rem;">
+      
+      <!-- Visual Gallery & Specs Column -->
+      <div>
+        <!-- Main Media Showcase -->
+        <div style="position: relative; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-lg); background: #ffffff;">
+          <div style="position: absolute; top: 1rem; left: 1rem; z-index: 10; background: rgba(15, 14, 38, 0.85); backdrop-filter: blur(8px); color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.35rem 0.75rem; border-radius: var(--radius-full); display: flex; align-items: center; gap: 0.35rem;">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span>
+            v2.4 TERBARU (Q1 2025)
+          </div>
+          <img id="detailThumbnail" src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&auto=format&fit=crop&q=80" alt="Detail Produk" style="width: 100%; aspect-ratio: 16/11; object-fit: cover;">
         </div>
+
+        <!-- Thumbnail Gallery Mockups -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem;">
+          <div style="border-radius: var(--radius-lg); overflow: hidden; border: 2px solid var(--primary-indigo); cursor: pointer;">
+            <img id="thumb1" src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=400&auto=format&fit=crop&q=80" alt="Preview 1" style="width: 100%; height: 75px; object-fit: cover;">
+          </div>
+          <div style="border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-subtle); cursor: pointer; opacity: 0.85;">
+            <img id="thumb2" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&auto=format&fit=crop&q=80" alt="Preview 2" style="width: 100%; height: 75px; object-fit: cover;">
+          </div>
+          <div style="border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-subtle); cursor: pointer; opacity: 0.85;">
+            <img id="thumb3" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&auto=format&fit=crop&q=80" alt="Preview 3" style="width: 100%; height: 75px; object-fit: cover;">
+          </div>
+        </div>
+
+        <!-- Design Architecture Chips -->
+        <div style="margin-top: 2rem; background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.5rem; box-shadow: var(--shadow-sm);">
+          <span style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); display: block; margin-bottom: 0.85rem;">SPESIFIKASI ARSITEKTUR DESAIN</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.6rem;">
+            <span class="badge badge-brand"><span class="material-symbols-outlined" style="font-size: 14px;">view_quilt</span> Auto-Layout 5.0 Responsive</span>
+            <span class="badge badge-brand"><span class="material-symbols-outlined" style="font-size: 14px;">tune</span> Figma Variables Native</span>
+            <span class="badge badge-brand"><span class="material-symbols-outlined" style="font-size: 14px;">dark_mode</span> Light & Dark Mode Tokens</span>
+            <span class="badge badge-brand"><span class="material-symbols-outlined" style="font-size: 14px;">update</span> Lifetime Free Updates</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Purchasing & Value Proposition Column -->
+      <div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.85rem;">
+          <span id="detailKategori" class="badge badge-brand" style="font-size: 0.8125rem;">UI & Design System</span>
+          <div style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.8125rem; color: var(--text-tertiary);">
+            <span style="color: #f59e0b;" class="material-symbols-outlined">star</span>
+            <strong style="color: var(--text-primary);">5.0</strong>
+            <span>(214 Ulasan Terverifikasi)</span>
+          </div>
+        </div>
+
+        <h1 id="detailNama" style="font-size: 2.25rem; font-weight: 800; line-height: 1.25; margin-bottom: 1rem;">
+          Memuat Detail Produk...
+        </h1>
+
+        <p id="detailDeskripsi" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem;">
+          Kit desain terlengkap untuk desainer produk, agency, dan frontend developer. Dibuat dengan standar industri global menggunakan variabel warna, typography skala modular, dan komponen adaptif tanpa batas.
+        </p>
+
+        <!-- Pricing Card -->
+        <div style="background: #ffffff; border: 1.5px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.5rem; box-shadow: var(--shadow-md); margin-bottom: 1.75rem;">
+          <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem; flex-wrap: wrap;">
+            <span id="detailHarga" style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 2.25rem; color: var(--primary-indigo);">Rp 0</span>
+            <span id="detailHargaCoret" style="font-size: 1.1rem; color: var(--text-muted); text-decoration: line-through;">Rp 450.000</span>
+            <span class="badge badge-danger" style="font-size: 0.75rem;">Hemat 33%</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--accent-success); font-weight: 600;">
+            <span class="material-symbols-outlined" style="font-size: 16px;">verified</span>
+            Pembayaran 1x • Lisensi Komersial Tak Terbatas • Bebas Royalti
+          </div>
+        </div>
+
+        <!-- What You Get Checklist -->
+        <div style="background: var(--surface-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.5rem; margin-bottom: 1.75rem;">
+          <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Apa Saja yang Anda Dapatkan:</h3>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.875rem; color: var(--text-secondary);">
+            <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+              <span class="material-symbols-outlined" style="color: var(--accent-success); font-size: 18px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <span><strong>500+ Komponen UI Siap Pakai:</strong> Formulir interaktif, data visualizer, navigasi responsif, card bento, dan modal dialog.</span>
+            </li>
+            <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+              <span class="material-symbols-outlined" style="color: var(--accent-success); font-size: 18px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <span><strong>Format File Lengkap:</strong> Master file <code>.fig</code> asli terstruktur, SVG vector source, dan dokumentasi CSS token code.</span>
+            </li>
+            <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+              <span class="material-symbols-outlined" style="color: var(--accent-success); font-size: 18px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <span><strong>Akses Google Drive Vault Privat:</strong> Folder cloud berkecepatan tinggi dengan garansi link aktif selamanya dan auto-update.</span>
+            </li>
+            <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+              <span class="material-symbols-outlined" style="color: var(--accent-success); font-size: 18px; flex-shrink: 0; margin-top: 2px;">check_circle</span>
+              <span><strong>Panduan Implementasi:</strong> Video walkthrough instalasi modul Figma Variables dan tips integrasi ke Tailwind CSS v3 & v4.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Automatic Dispatch Notice -->
+        <div style="background: var(--accent-info-bg); border: 1px solid var(--accent-info-border); border-radius: var(--radius-lg); padding: 1rem; display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.75rem;">
+          <span class="material-symbols-outlined" style="color: var(--accent-info); font-size: 24px;">bolt</span>
+          <div style="font-size: 0.8125rem; color: #0369a1; line-height: 1.4;">
+            <strong>Pengiriman Instan & Token Kunci Otomatis:</strong><br>
+            Setelah pembayaran berhasil, sistem automasi Google Sheets & Drive kami menerbitkan <strong>Kode Redeem Unik</strong> secara instan di layar dan langsung dikirim ke WhatsApp/Email Anda tanpa antre.
+          </div>
+        </div>
+
+        <!-- Buy Button CTA -->
+        <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+          <a id="btnCheckout" href="#" class="btn btn-primary btn-lg" style="width: 100%; font-size: 1.05rem; padding: 1rem;">
+            <span class="material-symbols-outlined">lock</span>
+            <span id="btnCheckoutText">Beli Sekarang</span>
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+
+          <div style="text-align: center;">
+            <a href="redeem.html" style="font-size: 0.8125rem; color: var(--primary-indigo); font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem;">
+              <span class="material-symbols-outlined" style="font-size: 16px;">key</span>
+              Sudah Punya Kode Redeem? Tukar di Sini
+            </a>
+          </div>
+        </div>
+
+        <!-- 3 Badges under CTA -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; text-align: center;">
+          <div style="background: #ffffff; border: 1px solid var(--border-subtle); padding: 0.85rem 0.5rem; border-radius: var(--radius-lg);">
+            <span class="material-symbols-outlined" style="color: var(--accent-info); font-size: 20px;">verified</span>
+            <div style="font-size: 0.75rem; font-weight: 700; margin-top: 0.25rem;">100% Asli</div>
+            <div style="font-size: 0.6875rem; color: var(--text-tertiary);">Dibuat Resmi</div>
+          </div>
+          <div style="background: #ffffff; border: 1px solid var(--border-subtle); padding: 0.85rem 0.5rem; border-radius: var(--radius-lg);">
+            <span class="material-symbols-outlined" style="color: var(--accent-success); font-size: 20px;">cloud_sync</span>
+            <div style="font-size: 0.75rem; font-weight: 700; margin-top: 0.25rem;">Instant Cloud</div>
+            <div style="font-size: 0.6875rem; color: var(--text-tertiary);">Akses 24/7</div>
+          </div>
+          <div style="background: #ffffff; border: 1px solid var(--border-subtle); padding: 0.85rem 0.5rem; border-radius: var(--radius-lg);">
+            <span class="material-symbols-outlined" style="color: #ec4899; font-size: 20px;">headset_mic</span>
+            <div style="font-size: 0.75rem; font-weight: 700; margin-top: 0.25rem;">Bantuan Aktif</div>
+            <div style="font-size: 0.6875rem; color: var(--text-tertiary);">Respons < 5 mnt</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Verified Customer Reviews Section -->
+    <section style="border-top: 1px solid var(--border-subtle); padding-top: 4rem;">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
         <div>
-          <span id="detailKategori" class="badge badge-success">Kategori</span>
-          <h1 id="detailNama" style="margin: 1rem 0; font-size: 2.5rem;">Loading...</h1>
-          <p id="detailHarga" style="font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 1.5rem;">Rp 0</p>
-          <p id="detailDeskripsi" style="color: var(--gray); margin-bottom: 2rem;">Deskripsi produk...</p>
-          
-          <a id="btnCheckout" href="#" class="btn btn-primary" style="font-size: 1.125rem; padding: 1rem 2rem;">Beli Sekarang</a>
+          <span style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #f59e0b; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.25rem;">
+            <span class="material-symbols-outlined" style="font-size: 16px;">grade</span>
+            ULASAN PELANGGAN ASLI
+          </span>
+          <h2 style="font-size: 1.75rem; font-weight: 700;">Apa Kata Pembeli Terverifikasi</h2>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Simak pengalaman langsung dari para desainer produk, founder agensi, dan developer.</p>
+        </div>
+
+        <a href="testimonial.html" class="btn btn-secondary btn-sm">
+          <span class="material-symbols-outlined">rate_review</span>
+          Tulis Ulasan Anda
+        </a>
+      </div>
+
+      <div id="testimoniList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+        <!-- Testimonials will be injected here via app.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Public Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="color: #ffffff; margin-bottom: 1rem;">
+            <div class="brand-icon">
+              <span class="material-symbols-outlined" style="font-size: 20px;">token</span>
+            </div>
+            <span>Digital Product Store</span>
+          </div>
+          <p>Platform distribusi instan aset digital, lisensi perangkat lunak, dan voucher premium terkurasi dengan sistem verifikasi otomatis.</p>
+          <div class="footer-sync-badge">
+            <span class="material-symbols-outlined" style="font-size: 16px; color: var(--accent-success);">cloud_done</span>
+            Powered by Google Sheets & Drive
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kategori & Panduan</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#katalog">Lisensi Software & SaaS</a></li>
+            <li><a href="index.html#katalog">Template UI & Kode Sumber</a></li>
+            <li><a href="redeem.html">Panduan Aktivasi Kode Instan</a></li>
+            <li><a href="redeem.html">Portal Validasi Redeem Token</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Layanan Pelanggan</h4>
+          <ul class="footer-links">
+            <li><a href="#">Pusat Bantuan & FAQ</a></li>
+            <li><a href="testimonial.html">Testimoni & Ulasan Pembeli</a></li>
+            <li><a href="#">Kebijakan Pengembalian & Garansi</a></li>
+            <li><a href="https://wa.me/" target="_blank">Hubungi Dukungan 24/7</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Digital Product Store. Hak cipta dilindungi undang-undang.</p>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="#">Syarat & Ketentuan</a>
+          <a href="#">Privasi</a>
         </div>
       </div>
     </div>
-  </section>
+  </footer>
 
   <script src="js/app.js"></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get('id');
-      if (id) loadProductDetail(id);
-    });
-  </script>
 </body>
 </html>
