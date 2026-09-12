@@ -3,7 +3,7 @@
    Sistem Desain Dynamic SaaS Pulse + Google Apps Script Integration
    ========================================================================== */
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbxpYgerNhagkCi3ya7ERck-RjQEOu07CQjKM89OwvgEZXfsBWzG-MJ2Uy7zlxOsKCSakw/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwcb7OCUNQgP-aeeXOa5nLbkVlrzLIlFgzKSHPy5CzXnlaO0ZUJ5Fygp91pn4g9fha3dg/exec';
 
 // Local Mock Fallback Data (memastikan UI tampil memukau persis mockup saat offline/belum connect backend)
 const MOCK_PRODUCTS = [
@@ -582,11 +582,17 @@ function setupTestimonialPage() {
 
 // Global Visit Tracker (Google Apps Script Telemetry)
 async function trackStoreVisit() {
-  try { await apiCall('trackVisit'); } catch (e) {}
+  try { await apiCall('trackVisit'); } catch (e) { }
 }
 
 // Initialize on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
+  // Update copyright year dynamically
+  const currentYear = new Date().getFullYear();
+  document.querySelectorAll('.current-year').forEach(el => {
+    el.textContent = currentYear;
+  });
+
   trackStoreVisit();
   if (document.getElementById('productGrid')) loadProductsCatalog();
   if (document.getElementById('detailNama')) loadProductDetailPage();

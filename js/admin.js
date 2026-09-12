@@ -3,7 +3,7 @@
    Sistem Desain Dynamic SaaS Pulse + Google Apps Script Webhooks
    ========================================================================== */
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbxpYgerNhagkCi3ya7ERck-RjQEOu07CQjKM89OwvgEZXfsBWzG-MJ2Uy7zlxOsKCSakw/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwcb7OCUNQgP-aeeXOa5nLbkVlrzLIlFgzKSHPy5CzXnlaO0ZUJ5Fygp91pn4g9fha3dg/exec';
 
 let adminToken = null;
 let currentTab = 'overview';
@@ -526,7 +526,7 @@ function openVerificationWorkspace(orderId) {
   document.getElementById('workTrxId').textContent = order.id;
   document.getElementById('workNominal').textContent = 'Rp ' + order.jumlah.toLocaleString('id-ID');
   document.getElementById('workCustomer').textContent = order.customer;
-  
+
   // Auto-generate realistic 16-char alphanumeric redeem key
   const randKey = 'RED-' + order.produk.slice(0, 4).toUpperCase().replace(/[^A-Z]/g, 'X') + '-' + Math.floor(1000 + Math.random() * 9000) + '-XP';
   document.getElementById('workKeyPreview').textContent = randKey;
