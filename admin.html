@@ -164,9 +164,9 @@
 
         <div class="sidebar-user-card">
           <div style="display: flex; align-items: center; gap: 0.6rem;">
-            <div class="sidebar-user-avatar">AM</div>
+            <div class="sidebar-user-avatar">AD</div>
             <div>
-              <div style="font-size: 0.8125rem; font-weight: 700; color: #fff;">Alex Morgan</div>
+              <div style="font-size: 0.8125rem; font-weight: 700; color: #fff;">Admin Store</div>
               <div style="font-size: 0.6875rem; color: #94a3b8;">Store Owner / Admin</div>
             </div>
           </div>
@@ -294,65 +294,50 @@
 
           <!-- Charts Row -->
           <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-            <!-- Sales Velocity Chart Mockup -->
+            <!-- Sales Velocity Chart Card -->
             <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.5rem; box-shadow: var(--shadow-sm);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                 <div>
                   <h3 style="font-size: 1.05rem; font-weight: 700;">Sales & Revenue Velocity</h3>
-                  <p style="font-size: 0.75rem; color: var(--text-tertiary);">Daily volume from automated checkout funnel</p>
+                  <p style="font-size: 0.75rem; color: var(--text-tertiary);">Volume transaksi harian dari checkout produk</p>
                 </div>
-                <span class="badge" style="background: var(--surface-subtle); border: 1px solid var(--border-subtle); font-size: 0.75rem;">Last 7 Days</span>
+                <span class="badge" style="background: var(--surface-subtle); border: 1px solid var(--border-subtle); font-size: 0.75rem;">7 Hari Terakhir</span>
               </div>
 
-              <!-- Visual SVG Line Chart Wave -->
-              <div style="height: 160px; width: 100%; position: relative; display: flex; align-items: flex-end;">
-                <svg viewBox="0 0 500 150" style="width: 100%; height: 100%; overflow: visible;">
-                  <defs>
-                    <linearGradient id="gradRevenue" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.3"/>
-                      <stop offset="100%" stop-color="#6366f1" stop-opacity="0.0"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M0,120 Q80,100 150,70 T300,50 T420,20 T500,60 L500,150 L0,150 Z" fill="url(#gradRevenue)" />
-                  <path d="M0,120 Q80,100 150,70 T300,50 T420,20 T500,60" fill="none" stroke="#6366f1" stroke-width="3" />
-                  <circle cx="420" cy="20" r="5" fill="#a855f7" stroke="#ffffff" stroke-width="2" />
-                </svg>
-                <div style="position: absolute; right: 60px; top: 0px; background: #0f0e26; color: #fff; padding: 0.35rem 0.65rem; border-radius: 6px; font-size: 0.6875rem; font-family: 'JetBrains Mono', monospace;">
-                  SABTU • 12 ORDERS<br><strong>Rp 4.200.000</strong>
+              <!-- Clean Empty State for Sales Chart -->
+              <div style="height: 160px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--surface-subtle); border-radius: var(--radius-lg); border: 1px dashed var(--border-subtle); color: var(--text-tertiary); text-align: center; padding: 1rem;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem; color: var(--primary-indigo); box-shadow: var(--shadow-sm);">
+                  <span class="material-symbols-outlined" style="font-size: 24px;">show_chart</span>
                 </div>
+                <div style="font-size: 0.875rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">Belum Ada Data Penjualan</div>
+                <div style="font-size: 0.75rem; max-width: 320px; line-height: 1.4;">Grafik tren omset akan otomatis aktif dan terisi saat pesanan mulai masuk dari toko.</div>
               </div>
 
               <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-tertiary); margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 0.75rem;">
-                <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><strong style="color: var(--primary-indigo);">Sab</strong><span>Min</span>
+                <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span>
               </div>
             </div>
 
-            <!-- Daily Visits Distribution -->
+            <!-- Daily Visits Distribution Card -->
             <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.5rem; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between;">
               <div>
                 <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                  <span style="font-size: 0.6875rem; font-weight: 700; color: var(--text-tertiary); letter-spacing: 0.05em; text-transform: uppercase;">STOREFRONT TRAFFIC</span>
-                  <strong style="font-size: 1.15rem; font-family: 'Sora', sans-serif;">1.280</strong>
+                  <span style="font-size: 0.6875rem; font-weight: 700; color: var(--text-tertiary); letter-spacing: 0.05em; text-transform: uppercase;">TRAFIK PENGUNJUNG</span>
+                  <strong style="font-size: 1.15rem; font-family: 'Sora', sans-serif;" id="overviewTrafficCount">0</strong>
                 </div>
-                <h3 style="font-size: 0.95rem; font-weight: 700; margin-top: 0.25rem;">Daily Visits Distribution</h3>
+                <h3 style="font-size: 0.95rem; font-weight: 700; margin-top: 0.25rem;">Distribusi Kunjungan Harian</h3>
               </div>
 
-              <!-- Bar Distribution -->
-              <div style="display: flex; align-items: flex-end; justify-content: space-between; height: 100px; padding: 1rem 0; gap: 0.35rem;">
-                <div style="width: 14%; height: 35%; background: #e0e7ff; border-radius: 4px;"></div>
-                <div style="width: 14%; height: 55%; background: #c7d2fe; border-radius: 4px;"></div>
-                <div style="width: 14%; height: 75%; background: #818cf8; border-radius: 4px;"></div>
-                <div style="width: 14%; height: 65%; background: #6366f1; border-radius: 4px;"></div>
-                <div style="width: 14%; height: 85%; background: #4f46e5; border-radius: 4px;"></div>
-                <div style="width: 14%; height: 100%; background: var(--brand-gradient); border-radius: 4px; position: relative;">
-                  <span style="position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 0.625rem; font-weight: 700; color: #ec4899;">PEAK</span>
-                </div>
-                <div style="width: 14%; height: 40%; background: #e0e7ff; border-radius: 4px;"></div>
+              <!-- Clean Empty State for Visits Distribution -->
+              <div style="height: 120px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--surface-subtle); border-radius: var(--radius-lg); border: 1px dashed var(--border-subtle); color: var(--text-tertiary); text-align: center; padding: 0.75rem; margin: 0.75rem 0;">
+                <span class="material-symbols-outlined" style="font-size: 26px; color: var(--text-muted); margin-bottom: 0.25rem;">bar_chart</span>
+                <div style="font-size: 0.8125rem; font-weight: 600; color: var(--text-secondary);">Belum Ada Kunjungan</div>
+                <div style="font-size: 0.6875rem;">Data trafik tercatat otomatis dari Google Apps Script</div>
               </div>
 
-              <div style="background: var(--surface-subtle); border-radius: var(--radius-md); padding: 0.75rem; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
-                <span>Peak buying window: <strong>19:30 – 21:15 WIB</strong></span>
-                <span style="color: var(--accent-success); font-weight: 600;">24.2% conversions</span>
+              <div style="background: var(--surface-subtle); border-radius: var(--radius-md); padding: 0.65rem 0.75rem; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+                <span>Status Pelacakan: <strong style="color: var(--accent-success);">Aktif</strong></span>
+                <span style="color: var(--text-tertiary);">Sinkronisasi otomatis</span>
               </div>
             </div>
           </div>
@@ -363,12 +348,12 @@
               <div>
                 <div style="display: flex; align-items: center; gap: 0.5rem;">
                   <h3 style="font-size: 1.05rem; font-weight: 700;">Latest Incoming Orders</h3>
-                  <span class="badge badge-pending" style="font-size: 0.6875rem;">3 Verifikasi Pending</span>
+                  <span class="badge badge-pending" id="overviewPendingBadge" style="font-size: 0.6875rem;">0 Verifikasi Pending</span>
                 </div>
-                <p style="font-size: 0.75rem; color: var(--text-tertiary);">Orders captured via Google Apps Script webhooks</p>
+                <p style="font-size: 0.75rem; color: var(--text-tertiary);">Pesanan terintegrasi langsung dengan database Google Sheets</p>
               </div>
               <button type="button" class="btn btn-outline btn-sm" onclick="switchAdminTab('orders');">
-                View All Orders ↗
+                Lihat Semua Pesanan ↗
               </button>
             </div>
 
@@ -400,7 +385,7 @@
             <div>
               <div style="display: flex; align-items: center; gap: 0.5rem;">
                 <h1 style="font-size: 1.75rem; font-weight: 800;">Product Catalog</h1>
-                <span class="badge badge-brand" id="prodCatalogBadge">14 Total</span>
+                <span class="badge badge-brand" id="prodCatalogBadge">0 Total</span>
                 <span class="badge badge-success" style="font-size: 0.6875rem;">● GAS Auto-Synced</span>
               </div>
               <p style="color: var(--text-secondary); font-size: 0.875rem;">Manage, edit pricing, upload thumbnails to Google Drive, and monitor digital delivery assets.</p>
@@ -425,18 +410,13 @@
 
             <div style="display: flex; gap: 0.5rem;">
               <select id="adminProductCatFilter" class="form-control" style="width: auto; padding: 0.45rem 0.85rem; font-size: 0.8125rem;">
-                <option value="">Category: All</option>
-                <option value="UI & Design System">UI & Design System</option>
-                <option value="Productivity & Notion">Productivity & Notion</option>
-                <option value="Automation Scripts">Automation Scripts</option>
-                <option value="3D & Blender">3D & Blender</option>
-                <option value="E-Books">E-Books</option>
+                <option value="">Kategori: Semua</option>
               </select>
 
               <select id="adminProductStatusFilter" class="form-control" style="width: auto; padding: 0.45rem 0.85rem; font-size: 0.8125rem;">
-                <option value="">Status: All Statuses</option>
-                <option value="Aktif">Active</option>
-                <option value="Nonaktif">Draft / Inactive</option>
+                <option value="">Status: Semua</option>
+                <option value="Aktif">Aktif di Etalase</option>
+                <option value="Nonaktif">Draft / Nonaktif</option>
               </select>
             </div>
           </div>
@@ -486,10 +466,10 @@
 
           <!-- Top Status Filters Tabs -->
           <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-            <button type="button" class="category-pill active" data-order-status="all">All (156)</button>
-            <button type="button" class="category-pill" data-order-status="Menunggu" style="color: #b45309; background: #fef3c7;">● Menunggu Verifikasi (3)</button>
-            <button type="button" class="category-pill" data-order-status="Terverifikasi">Terverifikasi (149)</button>
-            <button type="button" class="category-pill" data-order-status="Dibatalkan">Dibatalkan (4)</button>
+            <button type="button" class="category-pill active" data-order-status="all">Semua (<span id="countOrderAll">0</span>)</button>
+            <button type="button" class="category-pill" data-order-status="Menunggu" style="color: #b45309; background: #fef3c7;">● Menunggu Verifikasi (<span id="countOrderPending">0</span>)</button>
+            <button type="button" class="category-pill" data-order-status="Terverifikasi">Terverifikasi (<span id="countOrderVerified">0</span>)</button>
+            <button type="button" class="category-pill" data-order-status="Dibatalkan">Dibatalkan (<span id="countOrderCancelled">0</span>)</button>
           </div>
 
           <!-- Order Verification Workspace Box (Shown when checking pending order) -->
@@ -498,7 +478,7 @@
               <div style="display: flex; align-items: center; gap: 0.6rem;">
                 <span class="badge-dot" style="background: var(--primary-indigo);"></span>
                 <h3 style="font-size: 1.15rem; font-weight: 700;">Order Verification Workspace</h3>
-                <span class="badge-code" id="workTrxId">#ORD-9821</span>
+                <span class="badge-code" id="workTrxId">-</span>
               </div>
               <button type="button" class="btn btn-secondary btn-sm" onclick="closeWorkspace();">
                 <span class="material-symbols-outlined" style="font-size: 16px;">close</span> Tutup
@@ -510,28 +490,25 @@
               <div style="background: var(--surface-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.5rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                   <span style="font-size: 0.8125rem; font-weight: 700;">Bukti Pembayaran / Payment Proof</span>
-                  <span class="badge badge-brand" style="font-size: 0.6875rem;">BCA Transfer</span>
+                  <span class="badge badge-brand" style="font-size: 0.6875rem;">Transfer Bank / E-Wallet</span>
                 </div>
 
                 <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem;">
                   <div style="font-size: 0.75rem; color: var(--text-tertiary); margin-bottom: 0.25rem;">REKENING TUJUAN</div>
-                  <div style="font-weight: 700; font-size: 0.9rem;">8820192xxx (Store Owner)</div>
+                  <div style="font-weight: 700; font-size: 0.9rem;">BCA 8820192841</div>
                   <div style="display: flex; justify-content: space-between; margin-top: 0.6rem; font-size: 0.8125rem;">
                     <span>Jumlah Transfer:</span>
-                    <strong id="workNominal" style="color: var(--primary-indigo);">Rp 149.000</strong>
+                    <strong id="workNominal" style="color: var(--primary-indigo);">Rp 0</strong>
                   </div>
                   <div style="display: flex; justify-content: space-between; margin-top: 0.25rem; font-size: 0.8125rem;">
-                    <span>Pengirim:</span>
-                    <strong id="workCustomer">Budi Santoso</strong>
+                    <span>Customer:</span>
+                    <strong id="workCustomer">-</strong>
                   </div>
                 </div>
 
-                <!-- Simulation Proof Thumbnail -->
-                <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle); height: 160px; background: #e2e8f0; position: relative;">
-                  <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&auto=format&fit=crop&q=80" alt="Bukti Transfer" style="width: 100%; height: 100%; object-fit: cover;">
-                  <div style="position: absolute; bottom: 0.5rem; right: 0.5rem; background: rgba(0,0,0,0.7); color: #fff; padding: 0.2rem 0.5rem; font-size: 0.6875rem; border-radius: 4px;">
-                    Preview Bukti Mutasi
-                  </div>
+                <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px dashed var(--border-subtle); height: 140px; background: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1rem; color: var(--text-tertiary);">
+                  <span class="material-symbols-outlined" style="font-size: 32px; color: var(--text-muted); margin-bottom: 0.25rem;">receipt_long</span>
+                  <span style="font-size: 0.75rem;">Konfirmasi mutasi rekening sesuai nominal pesanan</span>
                 </div>
               </div>
 
@@ -539,7 +516,7 @@
               <div>
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
                   <h4 style="font-size: 1rem; font-weight: 700;">Automated Verification & Redeem Dispatch</h4>
-                  <span class="badge badge-brand" style="font-size: 0.6875rem;">GAS v2.4 Ready</span>
+                  <span class="badge badge-brand" style="font-size: 0.6875rem;">GAS Sync Ready</span>
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; font-size: 0.8125rem;">
@@ -555,14 +532,14 @@
                   <div style="background: var(--surface-subtle); border: 1.5px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; margin-top: 0.35rem;">
                     <div>
                       <div style="font-size: 0.6875rem; color: var(--text-tertiary); font-weight: 600;">GENERATED REDEEM KEY:</div>
-                      <div id="workKeyPreview" style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1rem; color: var(--primary-indigo);">RED-NOTION-9821-XQ</div>
+                      <div id="workKeyPreview" style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1rem; color: var(--primary-indigo);">—</div>
                     </div>
-                    <span class="badge badge-success" style="font-size: 0.6875rem;">✓ Valid</span>
+                    <span class="badge badge-success" style="font-size: 0.6875rem;">Siap Terbit</span>
                   </div>
 
                   <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); margin-top: 0.25rem;">
                     <span class="material-symbols-outlined" style="font-size: 18px; color: #f59e0b;">send</span>
-                    <span><strong>Step 3:</strong> Siap kirim pesan template WhatsApp / Email ke customer.</span>
+                    <span><strong>Step 3:</strong> Kode redeem siap diberikan kepada pembeli untuk membuka link Google Drive.</span>
                   </div>
                 </div>
 
@@ -570,11 +547,11 @@
                 <div style="display: flex; gap: 1rem;">
                   <button type="button" id="btnConfirmVerification" class="btn btn-success btn-lg" style="flex: 1.5; font-size: 0.95rem;">
                     <span class="material-symbols-outlined">check_circle</span>
-                    <span>Confirm Verification & Dispatch Code</span>
+                    <span>Konfirmasi & Terbitkan Kode</span>
                   </button>
                   <button type="button" id="btnRejectOrder" class="btn btn-danger btn-lg" style="flex: 1; font-size: 0.95rem;">
                     <span class="material-symbols-outlined">cancel</span>
-                    <span>Reject / Invalid</span>
+                    <span>Tolak Pesanan</span>
                   </button>
                 </div>
               </div>
@@ -630,22 +607,22 @@
           <div class="admin-kpi-grid">
             <div class="kpi-card">
               <span class="kpi-title">PENDING REVIEWS</span>
-              <div class="kpi-value" id="revPendingCount" style="color: #f59e0b;">5</div>
+              <div class="kpi-value" id="revPendingCount" style="color: #f59e0b;">0</div>
               <div class="kpi-footer" style="color: #f59e0b;">● Menunggu Moderasi</div>
             </div>
             <div class="kpi-card">
               <span class="kpi-title">APPROVED / LIVE</span>
-              <div class="kpi-value" id="revApprovedCount" style="color: var(--accent-success);">42</div>
+              <div class="kpi-value" id="revApprovedCount" style="color: var(--accent-success);">0</div>
               <div class="kpi-footer" style="color: var(--accent-success);">✓ Disetujui & Tayang</div>
             </div>
             <div class="kpi-card">
               <span class="kpi-title">AVERAGE STORE RATING</span>
-              <div class="kpi-value">4.9 <span style="font-size: 1rem; color: var(--text-tertiary);">/ 5.0</span></div>
-              <div class="kpi-footer">★★★★★ (48 Total)</div>
+              <div class="kpi-value" id="revAvgRating">-</div>
+              <div class="kpi-footer" id="revTotalText">Belum ada rating ulasan</div>
             </div>
             <div class="kpi-card">
               <span class="kpi-title">REJECTED / SPAM</span>
-              <div class="kpi-value" id="revRejectedCount" style="color: var(--accent-danger);">3</div>
+              <div class="kpi-value" id="revRejectedCount" style="color: var(--accent-danger);">0</div>
               <div class="kpi-footer" style="color: var(--accent-danger);">🚫 Ulasan Ditolak</div>
             </div>
           </div>
@@ -685,23 +662,23 @@
           <div class="admin-kpi-grid">
             <div class="kpi-card">
               <span class="kpi-title">GROSS REVENUE</span>
-              <div class="kpi-value" id="repGrossRev">Rp 48.750.000</div>
-              <div class="kpi-footer"><span style="color: var(--accent-success); font-weight: 600;">↗ +18.4%</span> vs bulan lalu</div>
+              <div class="kpi-value" id="repGrossRev">Rp 0</div>
+              <div class="kpi-footer">Berdasarkan data pesanan terverifikasi</div>
             </div>
             <div class="kpi-card">
               <span class="kpi-title">TOTAL PENGUNJUNG</span>
-              <div class="kpi-value" id="repTotalVisits">3.420</div>
-              <div class="kpi-footer"><span style="color: var(--accent-success); font-weight: 600;">↗ +12.6%</span> vs bulan lalu</div>
+              <div class="kpi-value" id="repTotalVisits">0</div>
+              <div class="kpi-footer">Tercatat dari Google Sheets</div>
             </div>
             <div class="kpi-card">
               <span class="kpi-title">CONVERSION RATE</span>
-              <div class="kpi-value">4.85%</div>
-              <div class="kpi-footer"><span style="color: var(--accent-success); font-weight: 600;">↗ +0.8%</span> 166 transaksi sukses</div>
+              <div class="kpi-value" id="repConvRate">0%</div>
+              <div class="kpi-footer">0 transaksi selesai</div>
             </div>
             <div class="kpi-card">
               <span class="kpi-title">AVG. ORDER VALUE (AOV)</span>
-              <div class="kpi-value">Rp 293.670</div>
-              <div class="kpi-footer">Produk terlaris: Notion Bundle</div>
+              <div class="kpi-value" id="repAvgOrder">Rp 0</div>
+              <div class="kpi-footer">Rata-rata per transaksi</div>
             </div>
           </div>
 
@@ -764,30 +741,24 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label" for="prodName">Product Name *</label>
-                  <input type="text" id="prodName" class="form-control" required placeholder="Figma UI Kit Pro 2025">
+                  <label class="form-label" for="prodName">Nama Produk Digital *</label>
+                  <input type="text" id="prodName" class="form-control" required placeholder="Contoh: Template Notion, Masterclass UI, E-Book...">
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                   <div class="form-group">
-                    <label class="form-label" for="prodKategori">Category *</label>
-                    <select id="prodKategori" class="form-control" required>
-                      <option value="UI & Design System">UI & Design System</option>
-                      <option value="Productivity & Notion">Productivity & Notion</option>
-                      <option value="Automation Scripts">Automation Scripts</option>
-                      <option value="3D & Blender">3D & Blender</option>
-                      <option value="E-Books">E-Books</option>
-                    </select>
+                    <label class="form-label" for="prodKategori">Kategori *</label>
+                    <input type="text" id="prodKategori" class="form-control" required placeholder="Contoh: Template, Desain, E-Book, Script...">
                   </div>
                   <div class="form-group">
                     <label class="form-label">SKU / Tag</label>
-                    <input type="text" id="prodSKU" class="form-control" placeholder="DIGI-2025-PRO" style="font-family: 'JetBrains Mono', monospace;">
+                    <input type="text" id="prodSKU" class="form-control" placeholder="PRD-001" style="font-family: 'JetBrains Mono', monospace;">
                   </div>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 0;">
-                  <label class="form-label" for="prodDesc">Description & Value Proposition</label>
-                  <textarea id="prodDesc" class="form-control" rows="3" placeholder="Jelaskan spesifikasi dan keunggulan produk..."></textarea>
+                  <label class="form-label" for="prodDesc">Deskripsi Produk</label>
+                  <textarea id="prodDesc" class="form-control" rows="3" placeholder="Jelaskan spesifikasi dan keunggulan aset digital..."></textarea>
                 </div>
               </div>
 
@@ -795,19 +766,19 @@
               <div style="background: var(--surface-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.25rem; margin-bottom: 1.5rem;">
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
                   <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--primary-indigo); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">2</span>
-                  <strong style="font-size: 0.95rem;">Pricing & Storefront Visibility</strong>
+                  <strong style="font-size: 0.95rem;">Harga & Visibilitas Etalase</strong>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                   <div class="form-group">
-                    <label class="form-label" for="prodHarga">Selling Price (Rp) *</label>
-                    <input type="number" id="prodHarga" class="form-control" required placeholder="299000">
+                    <label class="form-label" for="prodHarga">Harga Jual (Rp) *</label>
+                    <input type="number" id="prodHarga" class="form-control" required placeholder="149000">
                   </div>
                   <div class="form-group">
-                    <label class="form-label" for="prodStatus">Status Storefront</label>
+                    <label class="form-label" for="prodStatus">Status Etalase</label>
                     <select id="prodStatus" class="form-control">
-                      <option value="Aktif">Active on Storefront</option>
-                      <option value="Nonaktif">Draft / Inactive</option>
+                      <option value="Aktif">Aktif (Tampil di Katalog)</option>
+                      <option value="Nonaktif">Draft / Nonaktif</option>
                     </select>
                   </div>
                 </div>
@@ -817,14 +788,14 @@
               <div style="background: var(--surface-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.25rem; margin-bottom: 1.5rem;">
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
                   <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--primary-indigo); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">3</span>
-                  <strong style="font-size: 0.95rem;">Thumbnail Media (Google Drive)</strong>
+                  <strong style="font-size: 0.95rem;">Thumbnail Gambar Produk</strong>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 0;">
-                  <label class="form-label" for="prodThumbnail">Thumbnail Image URL / Drive Link</label>
-                  <input type="url" id="prodThumbnail" class="form-control" placeholder="https://images.unsplash.com/... atau Drive URL">
+                  <label class="form-label" for="prodThumbnail">URL Gambar Cover / Link Thumbnail</label>
+                  <input type="url" id="prodThumbnail" class="form-control" placeholder="https://... atau Link Google Drive Thumbnail">
                   <div style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 0.35rem;">
-                    URL publik gambar cover aset digital untuk etalase landing page.
+                    URL publik gambar cover untuk kartu etalase katalog.
                   </div>
                 </div>
               </div>
@@ -834,16 +805,16 @@
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
                   <div style="display: flex; align-items: center; gap: 0.5rem;">
                     <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--primary-indigo); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">4</span>
-                    <strong style="font-size: 0.95rem;">Protected Digital Asset URL</strong>
+                    <strong style="font-size: 0.95rem;">Tautan Akses File Digital (Google Drive)</strong>
                   </div>
-                  <span class="badge badge-brand" style="font-size: 0.6875rem;">🔒 Vault Encrypted</span>
+                  <span class="badge badge-brand" style="font-size: 0.6875rem;">🔒 Vault Protected</span>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 0;">
-                  <label class="form-label" for="prodLink">Secure Destination Download Link (Google Drive) *</label>
+                  <label class="form-label" for="prodLink">Link Folder / File Google Drive *</label>
                   <input type="url" id="prodLink" class="form-control" required placeholder="https://drive.google.com/drive/folders/...">
                   <div style="font-size: 0.75rem; color: #0369a1; background: var(--accent-info-bg); padding: 0.5rem; border-radius: 4px; margin-top: 0.5rem;">
-                    🛡️ <strong>Critical Security Architecture:</strong> Link ini tersimpan aman di Google Sheets dan HANYA diberikan ke customer setelah menukarkan kode redeem valid.
+                    🛡️ Link ini tersimpan aman di Google Sheets dan HANYA diberikan ke customer setelah menukarkan kode redeem valid.
                   </div>
                 </div>
               </div>
@@ -853,16 +824,17 @@
             <div>
               <div style="position: sticky; top: 1rem;">
                 <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.35rem;">
-                  <span class="material-symbols-outlined" style="font-size: 16px;">visibility</span> Storefront Live Preview
+                  <span class="material-symbols-outlined" style="font-size: 16px;">visibility</span> Live Preview Etalase
                 </div>
 
                 <div class="preview-phone-mockup">
-                  <div style="border-radius: var(--radius-lg); overflow: hidden; background: #e2e8f0; height: 130px; margin-bottom: 0.75rem;">
-                    <img id="livePreviewImg" src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=300&auto=format&fit=crop&q=80" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">
+                  <div style="border-radius: var(--radius-lg); overflow: hidden; background: #e2e8f0; height: 130px; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: center;">
+                    <img id="livePreviewImg" src="" alt="Preview" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                    <span id="livePreviewNoImg" style="color: var(--text-muted); font-size: 0.75rem;">Preview Gambar</span>
                   </div>
-                  <span class="badge badge-brand" id="livePreviewCat" style="font-size: 0.6875rem; margin-bottom: 0.35rem;">UI & Design</span>
-                  <div id="livePreviewTitle" style="font-size: 0.95rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.5rem;">Figma UI Kit Pro 2025</div>
-                  <div id="livePreviewPrice" style="font-family: 'Sora', sans-serif; font-weight: 800; color: var(--primary-indigo); font-size: 1.15rem; margin-bottom: 0.75rem;">Rp 299.000</div>
+                  <span class="badge badge-brand" id="livePreviewCat" style="font-size: 0.6875rem; margin-bottom: 0.35rem;">Kategori</span>
+                  <div id="livePreviewTitle" style="font-size: 0.95rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.5rem;">Nama Produk Baru</div>
+                  <div id="livePreviewPrice" style="font-family: 'Sora', sans-serif; font-weight: 800; color: var(--primary-indigo); font-size: 1.15rem; margin-bottom: 0.75rem;">Rp 0</div>
                   <button type="button" class="btn btn-primary btn-sm" style="width: 100%; pointer-events: none;">Beli Sekarang</button>
                 </div>
 

@@ -195,11 +195,15 @@ async function renderOverviewTab() {
       const pendingEl = document.getElementById('kpiPendingOrders');
       const redeemEl = document.getElementById('kpiRedeemedCodes');
       const visitEl = document.getElementById('kpiVisits');
+      const trafficEl = document.getElementById('overviewTrafficCount');
+      const pendingBadgeEl = document.getElementById('overviewPendingBadge');
 
       if (revEl) revEl.textContent = 'Rp ' + Number(stats.totalRevenue || 0).toLocaleString('id-ID');
       if (pendingEl) pendingEl.textContent = `${stats.pendingOrders || 0} Orders`;
       if (redeemEl) redeemEl.textContent = `${stats.redeemedCodes || 0}`;
       if (visitEl) visitEl.textContent = `${stats.totalVisits || stats.todayVisits || 0}`;
+      if (trafficEl) trafficEl.textContent = `${stats.todayVisits || stats.totalVisits || 0}`;
+      if (pendingBadgeEl) pendingBadgeEl.textContent = `${stats.pendingOrders || 0} Verifikasi Pending`;
 
       // Update sidebar badges
       const prodBadge = document.getElementById('sidebarProductCount');
@@ -302,6 +306,8 @@ async function renderProductsTab() {
     if (badgeCatalog) badgeCatalog.textContent = `${loadedAdminProducts.length} Total`;
     if (badgeSidebar) badgeSidebar.textContent = loadedAdminProducts.length;
 
+    // Update filter kategori dinamis
+    updateAdminCategoryFilter();
     renderFilteredProductsTable();
   } catch (err) {
     tbody.innerHTML = `
@@ -311,6 +317,26 @@ async function renderProductsTab() {
         </td>
       </tr>`;
   }
+}
+
+function updateAdminCategoryFilter() {
+  const catFilter = document.getElementById('adminProductCatFilter');
+  if (!catFilter) return;
+
+  const currentVal = catFilter.value;
+  const categories = Array.from(
+    new Set(
+      loadedAdminProducts
+        .map(p => (p.Kategori || p.kategori || '').trim())
+        .filter(c => c.length > 0)
+    )
+  );
+
+  let html = '<option value="">Kategori: Semua</option>';
+  categories.forEach(c => {
+    html += `<option value="${c}" ${c === currentVal ? 'selected' : ''}>${c}</option>`;
+  });
+  catFilter.innerHTML = html;
 }
 
 function renderFilteredProductsTable() {
@@ -455,6 +481,7 @@ async function renderOrdersTab() {
   try {
     const orders = await adminApiCall('getPesanan');
     loadedAdminOrders = Array.isArray(orders) ? orders : [];
+    updateOrderStatusPillCounts();
     renderFilteredOrdersTable();
   } catch (err) {
     tbody.innerHTML = `
@@ -464,6 +491,23 @@ async function renderOrdersTab() {
         </td>
       </tr>`;
   }
+}
+
+function updateOrderStatusPillCounts() {
+  const totalAll = loadedAdminOrders.length;
+  const totalPending = loadedAdminOrders.filter(o => (o['Status Pembayaran'] || o.status) === 'Menunggu').length;
+  const totalVerified = loadedAdminOrders.filter(o => (o['Status Pembayaran'] || o.status) === 'Terverifikasi').length;
+  const totalCancelled = loadedAdminOrders.filter(o => (o['Status Pembayaran'] || o.status) === 'Dibatalkan').length;
+
+  const elAll = document.getElementById('countOrderAll');
+  const elPending = document.getElementById('countOrderPending');
+  const elVerified = document.getElementById('countOrderVerified');
+  const elCancelled = document.getElementById('countOrderCancelled');
+
+  if (elAll) elAll.textContent = totalAll;
+  if (elPending) elPending.textContent = totalPending;
+  if (elVerified) elVerified.textContent = totalVerified;
+  if (elCancelled) elCancelled.textContent = totalCancelled;
 }
 
 function renderFilteredOrdersTable() {
@@ -632,7 +676,33 @@ async function renderTestimonialsTab() {
 
     const badgeSidebar = document.getElementById('sidebarReviewCount');
     const pendingCount = loadedAdminReviews.filter(r => (r.Status || r.status) === 'Menunggu Moderasi').length;
+    const approvedCount = loadedAdminReviews.filter(r => (r.Status || r.status) === 'Disetujui').length;
+    const rejectedCount = loadedAdminReviews.filter(r => (r.Status || r.status) === 'Ditolak').length;
+
     if (badgeSidebar) badgeSidebar.textContent = `${pendingCount} Baru`;
+
+    // Update KPI stats
+    const revPendingEl = document.getElementById('revPendingCount');
+    const revApprovedEl = document.getElementById('revApprovedCount');
+    const revRejectedEl = document.getElementById('revRejectedCount');
+    const revAvgRatingEl = document.getElementById('revAvgRating');
+    const revTotalTextEl = document.getElementById('revTotalText');
+
+    if (revPendingEl) revPendingEl.textContent = pendingCount;
+    if (revApprovedEl) revApprovedEl.textContent = approvedCount;
+    if (revRejectedEl) revRejectedEl.textContent = rejectedCount;
+
+    if (approvedCount > 0) {
+      const sumRating = loadedAdminReviews
+        .filter(r => (r.Status || r.status) === 'Disetujui')
+        .reduce((acc, r) => acc + Number(r.Rating || r.rating || 5), 0);
+      const avg = (sumRating / approvedCount).toFixed(1);
+      if (revAvgRatingEl) revAvgRatingEl.textContent = `${avg} / 5.0`;
+      if (revTotalTextEl) revTotalTextEl.textContent = `★`.repeat(Math.round(avg)) + ` (${approvedCount} Tayang)`;
+    } else {
+      if (revAvgRatingEl) revAvgRatingEl.textContent = '-';
+      if (revTotalTextEl) revTotalTextEl.textContent = 'Belum ada rating ulasan';
+    }
 
     if (loadedAdminReviews.length === 0) {
       container.innerHTML = `
@@ -740,6 +810,26 @@ async function renderReportsTab() {
     } catch (e) { }
   }
 
+  // Update telemetry metrics
+  const totalRev = loadedAdminOrders
+    .filter(o => (o['Status Pembayaran'] || o.status) === 'Terverifikasi')
+    .reduce((acc, o) => acc + Number(o.harga || o.Harga || o.Jumlah || 0), 0);
+  const successCount = loadedAdminOrders.filter(o => (o['Status Pembayaran'] || o.status) === 'Terverifikasi').length;
+  const aov = successCount > 0 ? Math.round(totalRev / successCount) : 0;
+
+  const grossRevEl = document.getElementById('repGrossRev');
+  const avgOrderEl = document.getElementById('repAvgOrder');
+  const convRateEl = document.getElementById('repConvRate');
+  const totalVisitsEl = document.getElementById('repTotalVisits');
+
+  if (grossRevEl) grossRevEl.textContent = 'Rp ' + totalRev.toLocaleString('id-ID');
+  if (avgOrderEl) avgOrderEl.textContent = 'Rp ' + aov.toLocaleString('id-ID');
+  if (convRateEl) convRateEl.textContent = loadedAdminOrders.length > 0 ? `${((successCount / loadedAdminOrders.length) * 100).toFixed(1)}%` : '0%';
+  if (totalVisitsEl) {
+    const stats = await adminApiCall('getDashboardStats').catch(() => null);
+    totalVisitsEl.textContent = stats?.totalVisits || stats?.todayVisits || 0;
+  }
+
   if (loadedAdminOrders.length === 0) {
     tbody.innerHTML = `
       <tr>
@@ -791,6 +881,8 @@ function setupProductModalEvents() {
   const prodHargaInput = document.getElementById('prodHarga');
   const prodCatInput = document.getElementById('prodKategori');
   const prodThumbInput = document.getElementById('prodThumbnail');
+  const previewImg = document.getElementById('livePreviewImg');
+  const previewNoImg = document.getElementById('livePreviewNoImg');
 
   if (prodNameInput) {
     prodNameInput.addEventListener('input', () => {
@@ -804,14 +896,19 @@ function setupProductModalEvents() {
     });
   }
   if (prodCatInput) {
-    prodCatInput.addEventListener('change', () => {
-      document.getElementById('livePreviewCat').textContent = prodCatInput.value;
+    prodCatInput.addEventListener('input', () => {
+      document.getElementById('livePreviewCat').textContent = prodCatInput.value || 'Kategori';
     });
   }
   if (prodThumbInput) {
     prodThumbInput.addEventListener('input', () => {
-      if (prodThumbInput.value) {
-        document.getElementById('livePreviewImg').src = prodThumbInput.value;
+      const val = prodThumbInput.value.trim();
+      if (val) {
+        if (previewImg) { previewImg.src = val; previewImg.style.display = 'block'; }
+        if (previewNoImg) previewNoImg.style.display = 'none';
+      } else {
+        if (previewImg) previewImg.style.display = 'none';
+        if (previewNoImg) previewNoImg.style.display = 'block';
       }
     });
   }
@@ -832,7 +929,7 @@ function setupProductModalEvents() {
             idProduk: editId,
             nama: prodNameInput.value.trim(),
             harga: Number(prodHargaInput.value),
-            kategori: prodCatInput.value,
+            kategori: prodCatInput.value.trim(),
             thumbnail: prodThumbInput.value.trim(),
             linkProduk: document.getElementById('prodLink').value.trim(),
             deskripsi: document.getElementById('prodDesc').value.trim(),
@@ -843,7 +940,7 @@ function setupProductModalEvents() {
           await adminApiCall('addProduk', {
             nama: prodNameInput.value.trim(),
             harga: Number(prodHargaInput.value),
-            kategori: prodCatInput.value,
+            kategori: prodCatInput.value.trim(),
             thumbnail: prodThumbInput.value.trim(),
             linkProduk: document.getElementById('prodLink').value.trim(),
             deskripsi: document.getElementById('prodDesc').value.trim(),
@@ -875,10 +972,16 @@ function openAddProductModal() {
   document.getElementById('prodDesc').value = '';
   document.getElementById('prodThumbnail').value = '';
   document.getElementById('prodLink').value = '';
+  document.getElementById('prodKategori').value = '';
 
-  document.getElementById('livePreviewTitle').textContent = 'Nama Produk';
+  document.getElementById('livePreviewTitle').textContent = 'Nama Produk Baru';
   document.getElementById('livePreviewPrice').textContent = 'Rp 0';
   document.getElementById('livePreviewCat').textContent = 'Kategori';
+  const previewImg = document.getElementById('livePreviewImg');
+  const previewNoImg = document.getElementById('livePreviewNoImg');
+  if (previewImg) previewImg.style.display = 'none';
+  if (previewNoImg) previewNoImg.style.display = 'block';
+
   modal.style.display = 'flex';
 }
 
@@ -908,8 +1011,16 @@ function editProductModal(id) {
 
   document.getElementById('livePreviewTitle').textContent = pName;
   document.getElementById('livePreviewPrice').textContent = 'Rp ' + pHarga.toLocaleString('id-ID');
-  document.getElementById('livePreviewCat').textContent = pCat;
-  if (pThumb) document.getElementById('livePreviewImg').src = pThumb;
+  document.getElementById('livePreviewCat').textContent = pCat || 'Kategori';
+  const previewImg = document.getElementById('livePreviewImg');
+  const previewNoImg = document.getElementById('livePreviewNoImg');
+  if (pThumb) {
+    if (previewImg) { previewImg.src = pThumb; previewImg.style.display = 'block'; }
+    if (previewNoImg) previewNoImg.style.display = 'none';
+  } else {
+    if (previewImg) previewImg.style.display = 'none';
+    if (previewNoImg) previewNoImg.style.display = 'block';
+  }
 
   modal.style.display = 'flex';
 }
