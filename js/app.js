@@ -11,21 +11,43 @@ const MOCK_REVIEWS = [];
 
 // Helper: API Caller ke Google Apps Script backend
 async function apiCall(action, params = {}) {
+  const payload = { action, ...params };
   try {
+    // 1. Primary: POST dengan text/plain (menghindari CORS OPTIONS preflight yang ditolak oleh GAS)
     const res = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action, ...params })
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+      redirect: 'follow'
     });
     const data = await res.json();
     if (!data.success) throw new Error(data.error || 'Terjadi kesalahan sistem');
     return data.data;
   } catch (err) {
-    console.warn(`API call [${action}] log:`, err.message);
-    if (action === 'getProduk') return [];
-    if (action === 'getProdukById') return null;
-    if (action === 'getTestimoni') return [];
-    throw err;
+    console.warn(`API call [${action}] primary POST error:`, err.message);
+
+    // 2. Fallback: GET dengan query parameters
+    try {
+      const qParams = new URLSearchParams();
+      for (const [k, v] of Object.entries(payload)) {
+        if (v !== undefined && v !== null) {
+          qParams.append(k, typeof v === 'object' ? JSON.stringify(v) : v);
+        }
+      }
+      const getRes = await fetch(`${API_URL}?${qParams.toString()}`, {
+        method: 'GET',
+        redirect: 'follow'
+      });
+      const getData = await getRes.json();
+      if (!getData.success) throw new Error(getData.error || 'Terjadi kesalahan sistem');
+      return getData.data;
+    } catch (fallbackErr) {
+      console.warn(`API call [${action}] fallback GET error:`, fallbackErr.message);
+      if (action === 'getProduk') return [];
+      if (action === 'getProdukById') return null;
+      if (action === 'getTestimoni') return [];
+      throw fallbackErr;
+    }
   }
 }
 

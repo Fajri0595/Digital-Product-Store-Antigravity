@@ -49,18 +49,18 @@
           </div>
           <div style="position: relative;">
             <span class="material-symbols-outlined" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px;">mail</span>
-            <input type="email" id="adminEmail" class="form-control" style="padding-left: 2.5rem;" required value="admin@domain.com">
+            <input type="email" id="adminEmail" class="form-control" style="padding-left: 2.5rem;" required placeholder="syarifahfadhili@gmail.com" value="syarifahfadhili@gmail.com">
           </div>
         </div>
 
         <div class="form-group">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
             <label class="form-label" for="adminPassword" style="margin-bottom: 0;">Master Key / Password</label>
-            <a href="#" onclick="alert('Gunakan password yang Anda atur pada file CONFIG di Code.gs GAS.'); return false;" style="font-size: 0.6875rem; color: var(--primary-indigo); font-weight: 600;">Emergency Recovery</a>
+            <a href="#" onclick="alert('Password admin dikonfigurasi pada CONFIG di backend Google Apps Script (Code.gs).'); return false;" style="font-size: 0.6875rem; color: var(--primary-indigo); font-weight: 600;">Emergency Recovery</a>
           </div>
           <div style="position: relative;">
             <span class="material-symbols-outlined" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px;">key</span>
-            <input type="password" id="adminPassword" class="form-control" style="padding-left: 2.5rem; padding-right: 2.5rem;" required value="password_admin_anda">
+            <input type="password" id="adminPassword" class="form-control" style="padding-left: 2.5rem; padding-right: 2.5rem;" required placeholder="Masukkan Password Admin" value="Qwerty_59">
             <button type="button" id="togglePasswordBtn" style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer;">
               <span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
             </button>
@@ -70,23 +70,15 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; font-size: 0.8125rem;">
           <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-secondary);">
             <input type="checkbox" id="persistSession" checked style="accent-color: var(--primary-indigo);">
-            Persist session (7 days)
+            Ingat Sesi Login (7 Hari)
           </label>
-          <span style="color: var(--text-tertiary); font-size: 0.75rem;">2FA Ready</span>
+          <span style="color: var(--text-tertiary); font-size: 0.75rem;">TLS Enkripsi Aktif</span>
         </div>
 
         <button type="submit" id="btnLoginSubmit" class="btn btn-primary btn-lg" style="width: 100%; font-size: 1rem;">
-          <span>Login to Admin Console</span>
+          <span>Masuk ke Admin Console</span>
           <span class="material-symbols-outlined">arrow_forward</span>
         </button>
-
-        <!-- Demo auto-fill banner -->
-        <div style="margin-top: 1.5rem; background: var(--surface-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.75rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem;">
-          <span style="color: var(--text-tertiary);">Demo Quick Fill:</span>
-          <button type="button" class="btn btn-secondary btn-sm" id="btnAutoFillDemo" style="padding: 0.2rem 0.5rem; font-size: 0.6875rem;">
-            Auto-fill
-          </button>
-        </div>
 
         <div id="loginError" style="margin-top: 1rem; color: var(--accent-danger); font-size: 0.8125rem; text-align: center; display: none;"></div>
       </form>

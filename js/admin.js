@@ -15,34 +15,56 @@ let loadedAdminReviews = [];
 
 // Helper: API caller ke Google Apps Script backend
 async function adminApiCall(action, params = {}) {
+  const payload = { action, token: adminToken, ...params };
   try {
+    // 1. Primary: POST dengan text/plain (menghindari CORS OPTIONS preflight yang ditolak oleh GAS)
     const res = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action, token: adminToken, ...params })
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+      redirect: 'follow'
     });
     const data = await res.json();
     if (!data.success) throw new Error(data.error || 'Permintaan gagal diproses');
     return data.data;
   } catch (err) {
-    console.warn(`Admin API [${action}] log:`, err.message);
-    if (action === 'adminLogin') throw err;
-    if (action === 'getSemuaProduk') return [];
-    if (action === 'getPesanan' || action === 'getSemuaPesanan') return [];
-    if (action === 'getSemuaTestimoni') return [];
-    if (action === 'getDashboardStats') {
-      return {
-        totalRevenue: 0,
-        pendingOrders: 0,
-        redeemedCodes: 0,
-        totalVisits: 0,
-        todayVisits: 0,
-        totalProduk: 0,
-        produkAktif: 0,
-        latestOrders: []
-      };
+    console.warn(`Admin API [${action}] primary POST error:`, err.message);
+
+    // 2. Fallback: jika gagal fetch (karena CORS/jaringan), coba GET dengan query parameters
+    try {
+      const qParams = new URLSearchParams();
+      for (const [k, v] of Object.entries(payload)) {
+        if (v !== undefined && v !== null) {
+          qParams.append(k, typeof v === 'object' ? JSON.stringify(v) : v);
+        }
+      }
+      const getRes = await fetch(`${API_URL}?${qParams.toString()}`, {
+        method: 'GET',
+        redirect: 'follow'
+      });
+      const getData = await getRes.json();
+      if (!getData.success) throw new Error(getData.error || 'Permintaan gagal diproses');
+      return getData.data;
+    } catch (fallbackErr) {
+      console.warn(`Admin API [${action}] fallback GET error:`, fallbackErr.message);
+      if (action === 'adminLogin') throw new Error(fallbackErr.message || err.message || 'Koneksi ke backend gagal');
+      if (action === 'getSemuaProduk') return [];
+      if (action === 'getPesanan' || action === 'getSemuaPesanan') return [];
+      if (action === 'getSemuaTestimoni') return [];
+      if (action === 'getDashboardStats') {
+        return {
+          totalRevenue: 0,
+          pendingOrders: 0,
+          redeemedCodes: 0,
+          totalVisits: 0,
+          todayVisits: 0,
+          totalProduk: 0,
+          produkAktif: 0,
+          latestOrders: []
+        };
+      }
+      throw fallbackErr;
     }
-    throw err;
   }
 }
 
