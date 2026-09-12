@@ -67,10 +67,7 @@
           <div style="position: relative;">
             <span class="material-symbols-outlined" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--primary-indigo); font-size: 20px;">lock_open</span>
             <input type="text" id="kodeRedeem" class="form-control" placeholder="RED-XXXX-XXXX-XX" required 
-                   style="padding-left: 2.6rem; padding-right: 4.5rem; font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
-            <button type="button" id="btnSampleCode" style="position: absolute; right: 0.6rem; top: 50%; transform: translateY(-50%); background: var(--surface-container); border: none; font-size: 0.6875rem; font-weight: 600; color: var(--primary-indigo); padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer;">
-              Sample
-            </button>
+                   style="padding-left: 2.6rem; padding-right: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
           </div>
 
           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.4rem; font-size: 0.75rem; color: var(--text-tertiary);">
@@ -87,16 +84,6 @@
           <span class="material-symbols-outlined">arrow_forward</span>
         </button>
       </form>
-
-      <!-- Status API Simulation Buttons (For testing/demo purposes as shown in wireframe) -->
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-subtle); font-size: 0.75rem; color: var(--text-tertiary);">
-        <span>Simulasi Status API:</span>
-        <div style="display: flex; gap: 0.4rem;">
-          <button type="button" class="btn btn-secondary btn-sm" id="simSuccess" style="padding: 0.2rem 0.5rem; font-size: 0.6875rem;">Sukses</button>
-          <button type="button" class="btn btn-secondary btn-sm" id="simError" style="padding: 0.2rem 0.5rem; font-size: 0.6875rem;">Error</button>
-          <button type="button" class="btn btn-secondary btn-sm" id="simLoading" style="padding: 0.2rem 0.5rem; font-size: 0.6875rem;">Memuat</button>
-        </div>
-      </div>
 
       <!-- Result Card (Shown on success) -->
       <div id="redeemSuccessResult" style="display: none; margin-top: 1.75rem; background: var(--accent-success-bg); border: 1.5px solid var(--accent-success-border); border-radius: var(--radius-xl); padding: 1.5rem; animation: modalFadeIn 0.3s ease;">
@@ -118,19 +105,19 @@
               <img id="unlockedThumb" src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=200&auto=format&fit=crop&q=80" alt="Produk" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div>
-              <div id="unlockedTitle" style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">Figma UI Kit Pro 2025</div>
+              <div id="unlockedTitle" style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">Aset Digital</div>
               <div style="font-size: 0.75rem; color: var(--text-tertiary); display: flex; align-items: center; gap: 0.5rem; margin-top: 0.15rem;">
-                <span style="display: flex; align-items: center; gap: 0.2rem;"><span class="material-symbols-outlined" style="font-size: 14px;">folder</span> 140 MB (.fig & .zip)</span>
+                <span id="unlockedMeta" style="display: flex; align-items: center; gap: 0.2rem;"><span class="material-symbols-outlined" style="font-size: 14px;">folder</span> Berkas Cloud Google Drive</span>
                 <span>•</span>
-                <span style="color: var(--accent-success); font-weight: 600;">✓ Lisensi Tim Aktif</span>
+                <span style="color: var(--accent-success); font-weight: 600;">✓ Lisensi Resmi</span>
               </div>
             </div>
           </div>
 
           <div style="background: var(--surface-subtle); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.5rem 0.75rem; display: flex; align-items: center; justify-content: space-between;">
             <div>
-              <div style="font-size: 0.625rem; font-weight: 700; letter-spacing: 0.05em; color: var(--text-tertiary); text-transform: uppercase;">PERSONAL LICENSE KEY</div>
-              <div id="unlockedKey" style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; font-weight: 700; color: var(--primary-indigo);">FG-PRO-2025-9941-LIFETIME</div>
+              <div style="font-size: 0.625rem; font-weight: 700; letter-spacing: 0.05em; color: var(--text-tertiary); text-transform: uppercase;">STATUS REDEEM</div>
+              <div id="unlockedKey" style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; font-weight: 700; color: var(--primary-indigo);">BERHASIL DIVERIFIKASI</div>
             </div>
             <button type="button" class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('unlockedKey').textContent); alert('License Key disalin!');" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">
               <span class="material-symbols-outlined" style="font-size: 14px;">content_copy</span> Salin
