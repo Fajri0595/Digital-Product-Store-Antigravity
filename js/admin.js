@@ -204,6 +204,31 @@ function switchAdminTab(tabName) {
   refreshCurrentTab();
 }
 
+function updateSidebarNotificationBadges(orderPending = null, reviewPending = null) {
+  const orderBadge = document.getElementById('sidebarOrderPendingCount');
+  const reviewBadge = document.getElementById('sidebarReviewCount');
+
+  if (orderBadge && orderPending !== null) {
+    const num = Number(orderPending) || 0;
+    orderBadge.textContent = `${num} Pending`;
+    if (num > 0) {
+      orderBadge.className = 'sidebar-count-badge badge-pending';
+    } else {
+      orderBadge.className = 'sidebar-count-badge badge-neutral';
+    }
+  }
+
+  if (reviewBadge && reviewPending !== null) {
+    const num = Number(reviewPending) || 0;
+    reviewBadge.textContent = `${num} Pending`;
+    if (num > 0) {
+      reviewBadge.className = 'sidebar-count-badge badge-pending';
+    } else {
+      reviewBadge.className = 'sidebar-count-badge badge-neutral';
+    }
+  }
+}
+
 // ==========================================================================
 // 2. TAB 1: OVERVIEW
 // ==========================================================================
@@ -211,8 +236,17 @@ async function renderOverviewTab() {
   const tbody = document.getElementById('overviewLatestOrders');
 
   try {
-    const stats = await adminApiCall('getDashboardStats');
-    if (stats) {
+    const [stats, reviews] = await Promise.allSettled([
+      adminApiCall('getDashboardStats'),
+      loadedAdminReviews.length === 0 ? adminApiCall('getSemuaTestimoni') : Promise.resolve(loadedAdminReviews)
+    ]);
+
+    const statsData = stats.status === 'fulfilled' ? stats.value : null;
+    if (reviews.status === 'fulfilled' && Array.isArray(reviews.value)) {
+      loadedAdminReviews = reviews.value;
+    }
+
+    if (statsData) {
       const revEl = document.getElementById('kpiTotalRevenue');
       const pendingEl = document.getElementById('kpiPendingOrders');
       const redeemEl = document.getElementById('kpiRedeemedCodes');
@@ -220,21 +254,23 @@ async function renderOverviewTab() {
       const trafficEl = document.getElementById('overviewTrafficCount');
       const pendingBadgeEl = document.getElementById('overviewPendingBadge');
 
-      if (revEl) revEl.textContent = 'Rp ' + Number(stats.totalRevenue || 0).toLocaleString('id-ID');
-      if (pendingEl) pendingEl.textContent = `${stats.pendingOrders || 0} Orders`;
-      if (redeemEl) redeemEl.textContent = `${stats.redeemedCodes || 0}`;
-      if (visitEl) visitEl.textContent = `${stats.totalVisits || stats.todayVisits || 0}`;
-      if (trafficEl) trafficEl.textContent = `${stats.todayVisits || stats.totalVisits || 0}`;
-      if (pendingBadgeEl) pendingBadgeEl.textContent = `${stats.pendingOrders || 0} Verifikasi Pending`;
+      if (revEl) revEl.textContent = 'Rp ' + Number(statsData.totalRevenue || 0).toLocaleString('id-ID');
+      if (pendingEl) pendingEl.textContent = `${statsData.pendingOrders || 0} Orders`;
+      if (redeemEl) redeemEl.textContent = `${statsData.redeemedCodes || 0}`;
+      if (visitEl) visitEl.textContent = `${statsData.totalVisits || statsData.todayVisits || 0}`;
+      if (trafficEl) trafficEl.textContent = `${statsData.todayVisits || statsData.totalVisits || 0}`;
+      if (pendingBadgeEl) pendingBadgeEl.textContent = `${statsData.pendingOrders || 0} Verifikasi Pending`;
 
-      // Update sidebar badges
+      // Update sidebar product count
       const prodBadge = document.getElementById('sidebarProductCount');
-      const orderBadge = document.getElementById('sidebarOrderPendingCount');
-      if (prodBadge) prodBadge.textContent = stats.totalProduk || 0;
-      if (orderBadge) orderBadge.textContent = `${stats.pendingOrders || 0} Pending`;
+      if (prodBadge) prodBadge.textContent = statsData.totalProduk || 0;
+
+      // Calculate pending review count
+      const pendingReviewCount = loadedAdminReviews.filter(r => (r.Status || r.status) === 'Menunggu Moderasi').length;
+      updateSidebarNotificationBadges(statsData.pendingOrders || 0, pendingReviewCount);
     }
 
-    const latest = stats?.latestOrders || [];
+    const latest = statsData?.latestOrders || [];
     if (!tbody) return;
 
     if (latest.length === 0) {
@@ -530,6 +566,9 @@ function updateOrderStatusPillCounts() {
   if (elPending) elPending.textContent = totalPending;
   if (elVerified) elVerified.textContent = totalVerified;
   if (elCancelled) elCancelled.textContent = totalCancelled;
+
+  // Sync sidebar Order pending badge immediately
+  updateSidebarNotificationBadges(totalPending, null);
 }
 
 function renderFilteredOrdersTable() {
@@ -696,12 +735,11 @@ async function renderTestimonialsTab() {
     const reviews = await adminApiCall('getSemuaTestimoni');
     loadedAdminReviews = Array.isArray(reviews) ? reviews : [];
 
-    const badgeSidebar = document.getElementById('sidebarReviewCount');
     const pendingCount = loadedAdminReviews.filter(r => (r.Status || r.status) === 'Menunggu Moderasi').length;
     const approvedCount = loadedAdminReviews.filter(r => (r.Status || r.status) === 'Disetujui').length;
     const rejectedCount = loadedAdminReviews.filter(r => (r.Status || r.status) === 'Ditolak').length;
 
-    if (badgeSidebar) badgeSidebar.textContent = `${pendingCount} Baru`;
+    updateSidebarNotificationBadges(null, pendingCount);
 
     // Update KPI stats
     const revPendingEl = document.getElementById('revPendingCount');

@@ -1121,9 +1121,24 @@ input, button, select, textarea {
 
 .sidebar-count-badge {
   font-size: 0.6875rem;
-  padding: 0.15rem 0.5rem;
+  padding: 0.15rem 0.55rem;
   border-radius: var(--radius-full);
   font-weight: 700;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+}
+
+.sidebar-count-badge.badge-neutral {
+  background: rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+}
+
+.sidebar-count-badge.badge-pending {
+  background: var(--accent-pending);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.35);
 }
 
 .sidebar-footer {
