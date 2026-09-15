@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {
       alert('Sinkronisasi selesai.');
     } finally {
-      btn.innerHTML = `<span class="material-symbols-outlined" style="font-size: 16px; color: #f59e0b;">bolt</span> Force Sync GAS`;
+      btn.innerHTML = `<span class="material-symbols-outlined" style="font-size: 16px; color: #f59e0b;">bolt</span> Force Sync`;
     }
   });
 

@@ -26,10 +26,10 @@
   <div id="loginScreen" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 30%, rgba(99,102,241,0.15) 0%, rgba(248,249,255,1) 70%); padding: 1.5rem;">
     <div style="width: 100%; max-width: 440px; background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-2xl); padding: 2.5rem; box-shadow: var(--shadow-xl); position: relative; text-align: center;">
       
-      <!-- Connected GAS API status badge -->
+      <!-- Connected API status badge -->
       <div style="display: inline-flex; align-items: center; gap: 0.4rem; background: var(--accent-success-bg); color: var(--accent-success); font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: var(--radius-full); margin-bottom: 1.5rem; border: 1px solid var(--accent-success-border);">
         <span class="badge-dot" style="background: var(--accent-success);"></span>
-        Google Apps Script API — Active & Connected
+        Cloud Database — Active & Connected
       </div>
 
       <div style="width: 56px; height: 56px; border-radius: var(--radius-xl); background: var(--brand-gradient); display: flex; align-items: center; justify-content: center; color: #ffffff; margin: 0 auto 1rem; box-shadow: var(--shadow-glow);">
@@ -97,7 +97,6 @@
           </div>
           <span>DigitalStore</span>
         </a>
-        <span class="sidebar-version-pill">GAS v2.4</span>
       </div>
 
       <ul class="sidebar-nav">
@@ -148,12 +147,6 @@
 
       <!-- Sidebar Footer -->
       <div class="sidebar-footer">
-        <div class="sidebar-sync-status">
-          <span class="sidebar-sync-dot"></span>
-          <span>GAS Sheets Synced</span>
-          <span class="material-symbols-outlined" style="font-size: 14px; margin-left: auto; color: var(--accent-success);">cloud_done</span>
-        </div>
-
         <div class="sidebar-user-card">
           <div style="display: flex; align-items: center; gap: 0.6rem;">
             <div class="sidebar-user-avatar">AD</div>
@@ -190,7 +183,7 @@
           <!-- Force Sync Button -->
           <button type="button" class="btn btn-secondary btn-sm" id="btnForceSync" style="gap: 0.35rem;">
             <span class="material-symbols-outlined" style="font-size: 16px; color: #f59e0b;">bolt</span>
-            <span>Force Sync GAS</span>
+            <span>Force Sync</span>
           </button>
 
           <!-- View Store Link -->
@@ -213,7 +206,7 @@
                 <span class="badge badge-success" style="font-size: 0.6875rem;">LIVE</span>
               </div>
               <p style="color: var(--text-secondary); font-size: 0.875rem;">
-                Ringkasan performa toko Anda • <span style="color: var(--accent-success);">● Terhubung Real-time ke Google Apps Script & Sheets</span>
+                Ringkasan performa toko Anda • <span style="color: var(--accent-success);">● Sistem Database Terhubung Real-time</span>
               </p>
             </div>
 
@@ -378,7 +371,7 @@
               <div style="display: flex; align-items: center; gap: 0.5rem;">
                 <h1 style="font-size: 1.75rem; font-weight: 800;">Product Catalog</h1>
                 <span class="badge badge-brand" id="prodCatalogBadge">0 Total</span>
-                <span class="badge badge-success" style="font-size: 0.6875rem;">● GAS Auto-Synced</span>
+                <span class="badge badge-success" style="font-size: 0.6875rem;">● Auto-Synced</span>
               </div>
               <p style="color: var(--text-secondary); font-size: 0.875rem;">Manage, edit pricing, upload thumbnails to Google Drive, and monitor digital delivery assets.</p>
             </div>
@@ -508,7 +501,7 @@
               <div>
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
                   <h4 style="font-size: 1rem; font-weight: 700;">Automated Verification & Redeem Dispatch</h4>
-                  <span class="badge badge-brand" style="font-size: 0.6875rem;">GAS Sync Ready</span>
+                  <span class="badge badge-brand" style="font-size: 0.6875rem;">Cloud Sync Ready</span>
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; font-size: 0.8125rem;">
