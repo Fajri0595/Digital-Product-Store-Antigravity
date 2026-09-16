@@ -640,7 +640,7 @@
               <p style="color: var(--text-secondary); font-size: 0.875rem;">Buat kode voucher promo untuk meningkatkan konversi checkout pelanggan toko Anda.</p>
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="openAddCouponModal()">
+            <button type="button" class="btn btn-primary" id="btnOpenAddCoupon" onclick="openAddCouponModal()">
               <span class="material-symbols-outlined">add_circle</span>
               <span>Buat Kupon Baru</span>
             </button>
@@ -889,8 +889,8 @@
   </div>
 
   <!-- Coupon Creation Modal -->
-  <div id="couponModal" class="admin-modal-overlay" style="display: none;">
-    <div class="admin-modal-box" style="max-width: 500px;">
+  <div id="couponModal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 520px;">
       <div class="modal-header">
         <div style="display: flex; align-items: center; gap: 0.75rem;">
           <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--surface-container); display: flex; align-items: center; justify-content: center; color: var(--primary-indigo);">
@@ -901,8 +901,8 @@
             <p style="font-size: 0.75rem; color: var(--text-tertiary);">Kupon akan tersimpan langsung di Google Sheets</p>
           </div>
         </div>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="closeCouponModal()">
-          <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+        <button type="button" class="modal-close-btn" onclick="closeCouponModal()">
+          <span class="material-symbols-outlined" style="font-size: 20px;">close</span>
         </button>
       </div>
 

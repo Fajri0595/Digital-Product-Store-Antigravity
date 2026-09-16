@@ -157,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Quick action buttons
   document.getElementById('btnQuickAddProduct')?.addEventListener('click', openAddProductModal);
   document.getElementById('btnOpenAddProduct')?.addEventListener('click', openAddProductModal);
+  document.getElementById('btnOpenAddCoupon')?.addEventListener('click', openAddCouponModal);
 
   // Setup Modals
   setupProductModalEvents();
@@ -966,6 +967,7 @@ async function toggleCouponStatusAction(kode, newStatus) {
     alert('Gagal mengubah status: ' + e.message);
   }
 }
+window.toggleCouponStatusAction = toggleCouponStatusAction;
 
 async function deleteCouponAction(kode) {
   if (!confirm(`Hapus kupon "${kode}" secara permanen?`)) return;
@@ -977,6 +979,7 @@ async function deleteCouponAction(kode) {
     alert('Gagal menghapus kupon: ' + e.message);
   }
 }
+window.deleteCouponAction = deleteCouponAction;
 
 function openAddCouponModal() {
   const modal = document.getElementById('couponModal');
@@ -984,11 +987,13 @@ function openAddCouponModal() {
   document.getElementById('formAddCoupon')?.reset();
   modal.style.display = 'flex';
 }
+window.openAddCouponModal = openAddCouponModal;
 
 function closeCouponModal() {
   const modal = document.getElementById('couponModal');
   if (modal) modal.style.display = 'none';
 }
+window.closeCouponModal = closeCouponModal;
 
 function setupCouponModalEvents() {
   const form = document.getElementById('formAddCoupon');
