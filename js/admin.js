@@ -12,6 +12,7 @@ let currentTab = 'overview';
 let loadedAdminOrders = [];
 let loadedAdminProducts = [];
 let loadedAdminReviews = [];
+let loadedAdminCoupons = [];
 
 // Helper: API caller ke Google Apps Script backend
 async function adminApiCall(action, params = {}) {
@@ -51,6 +52,7 @@ async function adminApiCall(action, params = {}) {
       if (action === 'getSemuaProduk') return [];
       if (action === 'getPesanan' || action === 'getSemuaPesanan') return [];
       if (action === 'getSemuaTestimoni') return [];
+      if (action === 'getSemuaKupon') return [];
       if (action === 'getDashboardStats') {
         return {
           totalRevenue: 0,
@@ -158,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Setup Modals
   setupProductModalEvents();
+  setupCouponModalEvents();
 });
 
 function showDashboardView() {
@@ -171,6 +174,7 @@ async function refreshCurrentTab() {
   if (currentTab === 'products') await renderProductsTab();
   if (currentTab === 'orders') await renderOrdersTab();
   if (currentTab === 'testimonials') await renderTestimonialsTab();
+  if (currentTab === 'coupons') await renderCouponsTab();
   if (currentTab === 'reports') await renderReportsTab();
 }
 
@@ -188,6 +192,7 @@ function switchAdminTab(tabName) {
     products: 'Product Catalog',
     orders: 'Fulfillment & Orders',
     testimonials: 'Testimonial Moderation',
+    coupons: 'Kupon & Kode Promo',
     reports: 'Sales Analytics'
   };
   const topBreadcrumb = document.getElementById('topbarBreadcrumb');
@@ -622,14 +627,19 @@ function renderFilteredOrdersTable() {
         <td>
           <div style="font-weight: 700;">${o['Nama Customer'] || o.customer || '-'}</div>
           <div style="font-size: 0.75rem; color: var(--text-tertiary);">${o['Kontak Customer'] || o.kontak || '-'}</div>
+          ${o['Email Customer'] || o.email ? `<div style="font-size: 0.7rem; color: var(--primary-indigo); font-family: 'JetBrains Mono', monospace;">${o['Email Customer'] || o.email}</div>` : ''}
         </td>
-        <td style="font-weight: 500;">${o.namaProduk || o['Nama Produk'] || o['ID Produk'] || '-'}</td>
+        <td style="font-weight: 500;">
+          <div>${o.namaProduk || o['Nama Produk'] || o['ID Produk'] || '-'}</div>
+          ${o['Kode Kupon'] && o['Kode Kupon'] !== '-' ? `<span class="badge" style="background: #e0e7ff; color: #3730a3; font-size: 0.6875rem;">Promo: ${o['Kode Kupon']} (-Rp ${(Number(o['Diskon Kupon']) || 0).toLocaleString('id-ID')})</span>` : ''}
+        </td>
         <td style="font-family: 'Sora', sans-serif; font-weight: 700; color: var(--primary-indigo);">Rp ${harga.toLocaleString('id-ID')}</td>
         <td>
           <span class="badge badge-${isVerified ? 'success' : isWaiting ? 'pending' : 'danger'}">
             <span class="badge-dot"></span>
             ${status}
           </span>
+          ${isVerified && o['Status Akses Drive'] ? `<div style="font-size: 0.6875rem; color: #047857; margin-top: 0.25rem;">🔒 Drive: ${o['Status Akses Drive']}</div>` : ''}
         </td>
         <td>
           <div style="display: flex; align-items: center; gap: 0.35rem;">
@@ -689,8 +699,8 @@ function openVerificationWorkspace(orderId) {
   // Confirm Verification Handler
   document.getElementById('btnConfirmVerification').onclick = async () => {
     try {
-      await adminApiCall('verifyPesanan', { idPesanan: idOrder, status: 'Terverifikasi' });
-      alert(`Pesanan #${idOrder} Berhasil Diverifikasi!\nKode Redeem unik otomatis diterbitkan dan tersimpan di Google Sheets.`);
+      const vRes = await adminApiCall('verifyPesanan', { idPesanan: idOrder, status: 'Terverifikasi' });
+      alert(`Pesanan #${idOrder} Berhasil Diverifikasi!\n\n${vRes.message || 'Kode Redeem unik otomatis diterbitkan dan tersimpan di Google Sheets.'}`);
       workspace.style.display = 'none';
       renderOrdersTab();
       renderOverviewTab();
@@ -857,7 +867,164 @@ async function moderateReviewAction(id, newStatus) {
 }
 
 // ==========================================================================
-// 6. TAB 5: REPORTS & ANALYTICS
+// 6. TAB: COUPONS & PROMO
+// ==========================================================================
+async function renderCouponsTab() {
+  const tbody = document.getElementById('adminCouponsTable');
+  if (!tbody) return;
+
+  tbody.innerHTML = `
+    <tr>
+      <td colspan="8" style="text-align: center; padding: 2.5rem; color: var(--text-tertiary);">
+        <span class="material-symbols-outlined" style="animation: spin 1s infinite linear;">sync</span> Memuat daftar kupon promo...
+      </td>
+    </tr>`;
+
+  try {
+    const coupons = await adminApiCall('getSemuaKupon');
+    loadedAdminCoupons = Array.isArray(coupons) ? coupons : [];
+
+    const badgeSidebar = document.getElementById('sidebarCouponCount');
+    if (badgeSidebar) badgeSidebar.textContent = loadedAdminCoupons.length;
+
+    if (loadedAdminCoupons.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align: center; padding: 4rem 1.5rem; color: var(--text-secondary);">
+            <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--surface-container); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--primary-indigo);">
+              <span class="material-symbols-outlined" style="font-size: 28px;">local_activity</span>
+            </div>
+            <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem;">Belum Ada Kupon Promo</h4>
+            <p style="font-size: 0.875rem; margin-bottom: 1.25rem;">Buat kode kupon diskon pertama untuk meningkatkan konversi penjualan produk digital Anda.</p>
+            <button type="button" class="btn btn-primary btn-sm" onclick="openAddCouponModal()">
+              <span class="material-symbols-outlined" style="font-size: 16px;">add</span> Buat Kupon Baru
+            </button>
+          </td>
+        </tr>`;
+      return;
+    }
+
+    tbody.innerHTML = loadedAdminCoupons.map(c => {
+      const kode = c['Kode Kupon'] || c.kode || '-';
+      const tipe = c['Tipe'] || c.tipe || 'nominal';
+      const nilai = Number(c['Nilai Potongan'] || c.nilai || 0);
+      const minBeli = Number(c['Minimal Pembelian'] || c.minBeli || 0);
+      const kuota = Number(c['Kuota'] || 0);
+      const terpakai = Number(c['Terpakai'] || 0);
+      const status = c['Status'] || c.status || 'Aktif';
+      const expDate = c['Tanggal Kadaluarsa'] ? new Date(c['Tanggal Kadaluarsa']).toLocaleDateString('id-ID') : 'Tanpa Batas';
+
+      const isAktif = status === 'Aktif';
+      const displayNilai = tipe === 'persen' ? `${nilai}%` : `Rp ${nilai.toLocaleString('id-ID')}`;
+
+      return `
+        <tr>
+          <td><span class="badge-code" style="font-size: 0.85rem; font-weight: 700; color: var(--primary-indigo);">${kode}</span></td>
+          <td><span class="badge" style="background: var(--surface-subtle);">${tipe === 'persen' ? 'Persentase' : 'Nominal Tetap'}</span></td>
+          <td style="font-weight: 700; color: var(--accent-success);">${displayNilai}</td>
+          <td>Rp ${minBeli.toLocaleString('id-ID')}</td>
+          <td>
+            <strong>${terpakai}</strong> / ${kuota > 0 ? kuota : '∞'}
+          </td>
+          <td style="font-size: 0.8125rem;">${expDate}</td>
+          <td>
+            <span class="badge badge-${isAktif ? 'success' : 'danger'}">
+              <span class="badge-dot"></span>
+              ${status}
+            </span>
+          </td>
+          <td style="text-align: right;">
+            <div style="display: flex; gap: 0.35rem; justify-content: flex-end;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="toggleCouponStatusAction('${kode}', '${isAktif ? 'Nonaktif' : 'Aktif'}')">
+                ${isAktif ? 'Nonaktifkan' : 'Aktifkan'}
+              </button>
+              <button type="button" class="btn btn-danger btn-sm" onclick="deleteCouponAction('${kode}')" style="padding: 0.2rem 0.5rem;">
+                <span class="material-symbols-outlined" style="font-size: 14px;">delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+  } catch (err) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" style="text-align: center; padding: 2.5rem; color: var(--text-danger);">
+          Gagal memuat daftar kupon: ${err.message}
+        </td>
+      </tr>`;
+  }
+}
+
+async function toggleCouponStatusAction(kode, newStatus) {
+  try {
+    await adminApiCall('toggleStatusKupon', { kodeKupon: kode, status: newStatus });
+    alert(`Status kupon ${kode} berhasil diubah ke: ${newStatus}`);
+    renderCouponsTab();
+  } catch (e) {
+    alert('Gagal mengubah status: ' + e.message);
+  }
+}
+
+async function deleteCouponAction(kode) {
+  if (!confirm(`Hapus kupon "${kode}" secara permanen?`)) return;
+  try {
+    await adminApiCall('deleteKupon', { kodeKupon: kode });
+    alert(`Kupon ${kode} berhasil dihapus.`);
+    renderCouponsTab();
+  } catch (e) {
+    alert('Gagal menghapus kupon: ' + e.message);
+  }
+}
+
+function openAddCouponModal() {
+  const modal = document.getElementById('couponModal');
+  if (!modal) return;
+  document.getElementById('formAddCoupon')?.reset();
+  modal.style.display = 'flex';
+}
+
+function closeCouponModal() {
+  const modal = document.getElementById('couponModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function setupCouponModalEvents() {
+  const form = document.getElementById('formAddCoupon');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('btnSaveCoupon');
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `<span class="material-symbols-outlined" style="animation: spin 1s infinite linear;">sync</span> Menyimpan...`;
+
+    try {
+      await adminApiCall('addKupon', {
+        kodeKupon: document.getElementById('couponCode').value.trim(),
+        tipe: document.getElementById('couponType').value,
+        nilaiPotongan: Number(document.getElementById('couponValue').value),
+        minimalPembelian: Number(document.getElementById('couponMinSpend').value || 0),
+        kuota: Number(document.getElementById('couponQuota').value || 0),
+        tanggalKadaluarsa: document.getElementById('couponExpiry').value || ''
+      });
+
+      alert('Kupon promo berhasil disimpan ke Google Sheets!');
+      closeCouponModal();
+      renderCouponsTab();
+    } catch (err) {
+      alert('Gagal menyimpan kupon: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
+  });
+}
+
+// ==========================================================================
+// 7. TAB 6: REPORTS & ANALYTICS
 // ==========================================================================
 async function renderReportsTab() {
   const tbody = document.getElementById('reportsTransactionTable');

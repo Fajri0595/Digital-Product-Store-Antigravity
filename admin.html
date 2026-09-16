@@ -136,6 +136,15 @@
           </a>
         </li>
         <li>
+          <a class="sidebar-link" data-tab="coupons">
+            <div class="sidebar-link-content">
+              <span class="material-symbols-outlined">local_activity</span>
+              <span>Kupon & Promo</span>
+            </div>
+            <span class="sidebar-count-badge badge-neutral" id="sidebarCouponCount">0</span>
+          </a>
+        </li>
+        <li>
           <a class="sidebar-link" data-tab="reports">
             <div class="sidebar-link-content">
               <span class="material-symbols-outlined">bar_chart</span>
@@ -622,6 +631,45 @@
         </section>
 
 
+        <!-- ==================== TAB: KUPON & PROMO ==================== -->
+        <section id="tab-coupons" class="admin-tab-content">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <span style="font-size: 0.75rem; font-weight: 700; color: var(--primary-indigo); letter-spacing: 0.06em; text-transform: uppercase;">PROMOSI & PENJUALAN</span>
+              <h1 style="font-size: 1.75rem; font-weight: 800;">Manajemen Kupon & Kode Diskon</h1>
+              <p style="color: var(--text-secondary); font-size: 0.875rem;">Buat kode voucher promo untuk meningkatkan konversi checkout pelanggan toko Anda.</p>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="openAddCouponModal()">
+              <span class="material-symbols-outlined">add_circle</span>
+              <span>Buat Kupon Baru</span>
+            </button>
+          </div>
+
+          <div class="data-table-card">
+            <div class="data-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Kode Kupon</th>
+                    <th>Tipe Diskon</th>
+                    <th>Nilai Potongan</th>
+                    <th>Min. Belanja</th>
+                    <th>Kuota / Terpakai</th>
+                    <th>Kadaluarsa</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="adminCouponsTable">
+                  <!-- Injected via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
         <!-- ==================== TAB 5: REPORTS & ANALYTICS ==================== -->
         <section id="tab-reports" class="admin-tab-content">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
@@ -834,6 +882,77 @@
                 </div>
               </div>
             </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Coupon Creation Modal -->
+  <div id="couponModal" class="admin-modal-overlay" style="display: none;">
+    <div class="admin-modal-box" style="max-width: 500px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--surface-container); display: flex; align-items: center; justify-content: center; color: var(--primary-indigo);">
+            <span class="material-symbols-outlined">local_activity</span>
+          </div>
+          <div>
+            <h3 style="font-size: 1.15rem; font-weight: 700;">Buat Kupon Promo Baru</h3>
+            <p style="font-size: 0.75rem; color: var(--text-tertiary);">Kupon akan tersimpan langsung di Google Sheets</p>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeCouponModal()">
+          <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="formAddCoupon">
+          <div class="form-group">
+            <label class="form-label" for="couponCode">Kode Kupon *</label>
+            <input type="text" id="couponCode" class="form-control" required placeholder="MISAL: PROMO50, HEMAT10" style="text-transform: uppercase; font-family: 'JetBrains Mono', monospace; font-weight: 700;">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="couponType">Tipe Potongan *</label>
+              <select id="couponType" class="form-control" required>
+                <option value="nominal">Nominal Rupiah (Rp)</option>
+                <option value="persen">Persentase (%)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="couponValue">Nilai Potongan *</label>
+              <input type="number" id="couponValue" class="form-control" required min="1" placeholder="20000 atau 15">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="couponMinSpend">Min. Belanja (Rp)</label>
+              <input type="number" id="couponMinSpend" class="form-control" min="0" value="0" placeholder="0">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="couponQuota">Kuota Penggunaan</label>
+              <input type="number" id="couponQuota" class="form-control" min="0" value="0" placeholder="0 (Tanpa batas)">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="couponExpiry">Tanggal Kadaluarsa (Opsional)</label>
+            <input type="date" id="couponExpiry" class="form-control">
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+            <button type="submit" id="btnSaveCoupon" class="btn btn-primary" style="flex: 1;">
+              <span class="material-symbols-outlined">save</span>
+              <span>Simpan Kupon</span>
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="closeCouponModal()">
+              Batal
+            </button>
           </div>
         </form>
       </div>

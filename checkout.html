@@ -66,6 +66,30 @@
           <span>Harga Normal Produk</span>
           <span id="summaryOriginalPrice">Rp 0</span>
         </div>
+
+        <!-- Coupon Input Row -->
+        <div style="margin: 0.85rem 0; padding: 0.75rem; background: var(--surface-subtle); border: 1px dashed var(--border-subtle); border-radius: var(--radius-md);">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.35rem;">
+            <span class="material-symbols-outlined" style="font-size: 16px; color: var(--primary-indigo);">local_activity</span>
+            Punya Kode Kupon / Voucher Promo?
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="text" id="inputKodeKupon" class="form-control form-control-sm" placeholder="Contoh: DISKON20" style="text-transform: uppercase; font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem;">
+            <button type="button" id="btnApplyCoupon" class="btn btn-secondary btn-sm" style="white-space: nowrap; font-size: 0.8125rem;">
+              Terapkan
+            </button>
+          </div>
+          <div id="couponFeedback" style="font-size: 0.75rem; margin-top: 0.4rem; display: none;"></div>
+        </div>
+
+        <div id="rowDiskonKupon" style="display: none; justify-content: space-between; margin-bottom: 0.4rem; color: var(--accent-success); font-weight: 600;">
+          <span style="display: flex; align-items: center; gap: 0.25rem;">
+            <span class="material-symbols-outlined" style="font-size: 15px;">check_circle</span>
+            Diskon Kupon (<span id="summaryCouponCode">PROMO</span>)
+          </span>
+          <span id="summaryDiscountAmount">- Rp 0</span>
+        </div>
+
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; color: #f59e0b; font-weight: 600;">
           <span style="display: flex; align-items: center; gap: 0.25rem;">
             Kode Unik Verifikasi

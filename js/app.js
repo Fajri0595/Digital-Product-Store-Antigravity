@@ -387,22 +387,95 @@ function setupCheckoutPage() {
     return;
   }
 
+  // State kalkulasi diskon & kupon
+  let appliedCouponCode = '';
+  let discountAmount = 0;
+
   // Generate 3 digit unique verification code (e.g. 100 - 999)
   const uniqueCode = Math.floor(100 + Math.random() * 899);
-  const totalTransfer = price + uniqueCode;
 
-  // Populate UI
-  document.getElementById('idProduk').value = id;
-  document.getElementById('totalBayarInput').value = totalTransfer;
-  if (summaryTitleEl) summaryTitleEl.textContent = decodeURIComponent(name || 'Produk Digital');
-  if (summaryPriceEl) summaryPriceEl.textContent = 'Rp ' + price.toLocaleString('id-ID');
-  if (summaryCodeEl) summaryCodeEl.textContent = '+ Rp ' + uniqueCode;
-  if (summaryTotalEl) summaryTotalEl.textContent = 'Rp ' + totalTransfer.toLocaleString('id-ID');
-  if (instructionCodeEl) instructionCodeEl.textContent = uniqueCode;
-  if (thumb && summaryThumbEl) summaryThumbEl.src = decodeURIComponent(thumb);
+  function recalculateCheckout() {
+    const netProductPrice = Math.max(0, price - discountAmount);
+    const totalTransfer = netProductPrice + uniqueCode;
+
+    document.getElementById('idProduk').value = id;
+    document.getElementById('totalBayarInput').value = totalTransfer;
+    if (summaryTitleEl) summaryTitleEl.textContent = decodeURIComponent(name || 'Produk Digital');
+    if (summaryPriceEl) summaryPriceEl.textContent = 'Rp ' + price.toLocaleString('id-ID');
+    if (summaryCodeEl) summaryCodeEl.textContent = '+ Rp ' + uniqueCode;
+    if (summaryTotalEl) summaryTotalEl.textContent = 'Rp ' + totalTransfer.toLocaleString('id-ID');
+    if (instructionCodeEl) instructionCodeEl.textContent = uniqueCode;
+    if (thumb && summaryThumbEl) summaryThumbEl.src = decodeURIComponent(thumb);
+
+    const rowDiskon = document.getElementById('rowDiskonKupon');
+    const summaryCouponCode = document.getElementById('summaryCouponCode');
+    const summaryDiscountAmount = document.getElementById('summaryDiscountAmount');
+
+    if (discountAmount > 0) {
+      if (rowDiskon) rowDiskon.style.display = 'flex';
+      if (summaryCouponCode) summaryCouponCode.textContent = appliedCouponCode;
+      if (summaryDiscountAmount) summaryDiscountAmount.textContent = '- Rp ' + discountAmount.toLocaleString('id-ID');
+    } else {
+      if (rowDiskon) rowDiskon.style.display = 'none';
+    }
+
+    return totalTransfer;
+  }
+
+  recalculateCheckout();
+
+  // Handle Coupon Apply
+  const inputKupon = document.getElementById('inputKodeKupon');
+  const btnKupon = document.getElementById('btnApplyCoupon');
+  const feedbackKupon = document.getElementById('couponFeedback');
+
+  if (btnKupon && inputKupon) {
+    btnKupon.addEventListener('click', async () => {
+      const kode = inputKupon.value.trim().toUpperCase();
+      if (!kode) {
+        alert('Silakan masukkan kode kupon');
+        return;
+      }
+
+      btnKupon.disabled = true;
+      btnKupon.innerHTML = `<span class="material-symbols-outlined" style="animation: spin 1s infinite linear; font-size: 14px;">sync</span>`;
+
+      try {
+        const res = await apiCall('validasiKupon', {
+          kodeKupon: kode,
+          totalBelanja: price
+        });
+
+        appliedCouponCode = res.kodeKupon;
+        discountAmount = res.potongan || 0;
+        recalculateCheckout();
+
+        if (feedbackKupon) {
+          feedbackKupon.style.display = 'block';
+          feedbackKupon.style.color = 'var(--accent-success)';
+          feedbackKupon.textContent = `✓ ${res.message || 'Kupon berhasil diterapkan!'}`;
+        }
+      } catch (err) {
+        discountAmount = 0;
+        appliedCouponCode = '';
+        recalculateCheckout();
+
+        if (feedbackKupon) {
+          feedbackKupon.style.display = 'block';
+          feedbackKupon.style.color = 'var(--accent-danger)';
+          feedbackKupon.textContent = `✕ ${err.message || 'Kupon tidak valid'}`;
+        }
+      } finally {
+        btnKupon.disabled = false;
+        btnKupon.textContent = 'Terapkan';
+      }
+    });
+  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const currentTotal = recalculateCheckout();
+
     btnSubmit.disabled = true;
     btnSubmit.innerHTML = `<span class="material-symbols-outlined" style="animation: spin 1s infinite linear;">sync</span> Memproses Pesanan...`;
 
@@ -412,10 +485,11 @@ function setupCheckoutPage() {
         namaCustomer: document.getElementById('namaCustomer').value,
         kontakCustomer: document.getElementById('kontakCustomer').value,
         emailCustomer: document.getElementById('emailCustomer').value,
-        totalTransfer: totalTransfer
+        kodeKupon: appliedCouponCode || '',
+        totalTransfer: currentTotal
       });
 
-      alert(`Pesanan #${res.idPesanan || 'ORD'} Berhasil Dibuat!\n\nSilakan transfer Rp ${totalTransfer.toLocaleString('id-ID')} ke rekening BCA: 8820192841.\nKode Redeem unik akan dikirimkan otomatis setelah transfer dikonfirmasi.`);
+      alert(`Pesanan #${res.idPesanan || 'ORD'} Berhasil Dibuat!\n\nSilakan transfer Rp ${currentTotal.toLocaleString('id-ID')} ke rekening BCA: 8820192841.\nKode Redeem unik akan otomatis diterbitkan dan hak akses Google Drive langsung dibuka setelah konfirmasi.`);
       window.location.href = 'redeem.html';
     } catch (err) {
       alert('Gagal mengirim pesanan: ' + err.message);
@@ -447,12 +521,13 @@ function setupRedeemPage() {
     }
   });
 
-  function showRedeemSuccess(link, name) {
+  function showRedeemSuccess(link, name, driveGranted, emailCustomer) {
     if (errorBox) errorBox.style.display = 'none';
     if (successBox) successBox.style.display = 'block';
     const titleEl = document.getElementById('unlockedTitle');
     const dlBtn = document.getElementById('btnDownloadGDrive');
     const copyFallbackBtn = document.getElementById('btnCopyFallbackLink');
+    const driveStatusText = document.getElementById('drivePermissionNotice');
 
     if (titleEl) titleEl.textContent = name || 'Aset Digital Terverifikasi';
     if (dlBtn) dlBtn.href = link || 'https://drive.google.com';
@@ -461,6 +536,16 @@ function setupRedeemPage() {
         navigator.clipboard.writeText(link || 'https://drive.google.com');
         alert('Tautan akses Google Drive berhasil disalin ke clipboard!');
       };
+    }
+
+    if (driveStatusText) {
+      if (driveGranted && emailCustomer) {
+        driveStatusText.innerHTML = `✓ Hak akses Google Drive telah otomatis diberikan ke <strong>${emailCustomer}</strong> (Viewer Mode). Silakan klik tombol di atas dengan akun tersebut.`;
+        driveStatusText.style.display = 'block';
+      } else {
+        driveStatusText.innerHTML = `Tautan unduhan aman ini terhubung langsung ke Google Drive Storage resmi.`;
+        driveStatusText.style.display = 'block';
+      }
     }
   }
 
@@ -472,7 +557,7 @@ function setupRedeemPage() {
 
     try {
       const res = await apiCall('redeem', { kodeRedeem: input.value.trim() });
-      showRedeemSuccess(res.linkProduk, res.namaProduk);
+      showRedeemSuccess(res.linkProduk, res.namaProduk, res.driveGranted, res.emailCustomer);
     } catch (err) {
       if (successBox) successBox.style.display = 'none';
       if (errorBox) errorBox.style.display = 'block';
