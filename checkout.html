@@ -217,6 +217,43 @@
           </div>
         </div>
 
+        <!-- Upload Bukti Transfer (Opsional) -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.35rem;">
+            <label class="form-label" style="margin-bottom: 0; font-weight: 700; display: flex; align-items: center; gap: 0.35rem;">
+              <span class="material-symbols-outlined" style="font-size: 18px; color: var(--primary-indigo);">receipt_long</span>
+              Upload Bukti Transfer <span class="badge" style="background: var(--surface-container); color: var(--text-tertiary); font-size: 0.65rem; margin-left: 0.35rem;">Opsional</span>
+            </label>
+          </div>
+          <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-bottom: 0.75rem;">
+            Sudah transfer? Lampirkan screenshot/foto struk transfer agar verifikasi lebih cepat (Maks 2MB, JPG/PNG). Jika belum, Anda bisa langsung konfirmasi pesanan terlebih dahulu.
+          </p>
+
+          <input type="file" id="inputBuktiTransfer" accept="image/png, image/jpeg, image/webp" style="display: none;">
+          
+          <div id="dropzoneBukti" style="border: 2px dashed var(--border-subtle); border-radius: var(--radius-lg); padding: 1.25rem; text-align: center; background: var(--surface-subtle); cursor: pointer; transition: all 0.2s ease;">
+            <div id="dropzonePlaceholder">
+              <span class="material-symbols-outlined" style="font-size: 36px; color: var(--primary-indigo); margin-bottom: 0.25rem;">add_photo_alternate</span>
+              <div style="font-size: 0.8125rem; font-weight: 600; color: var(--text-primary);">Klik untuk pilih foto / screenshot struk transfer</div>
+              <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem;">Format JPG, PNG, atau WebP (Maksimal 2 MB)</div>
+            </div>
+
+            <div id="dropzonePreview" style="display: none; align-items: center; justify-content: space-between; gap: 1rem; text-align: left;">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <img id="imgPreviewBukti" src="" alt="Preview Bukti" style="width: 56px; height: 56px; object-fit: cover; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                <div>
+                  <div id="txtPreviewName" style="font-size: 0.8125rem; font-weight: 700; color: var(--text-primary); word-break: break-all;">nama_file.jpg</div>
+                  <div id="txtPreviewSize" style="font-size: 0.7rem; color: var(--text-tertiary);">0 KB</div>
+                </div>
+              </div>
+              <button type="button" id="btnHapusBukti" class="btn btn-secondary btn-sm" style="color: var(--accent-danger); border-color: var(--accent-danger-border);">
+                <span class="material-symbols-outlined" style="font-size: 16px;">delete</span>
+                <span>Hapus</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div style="background: var(--accent-info-bg); border: 1px solid var(--accent-info-border); border-radius: var(--radius-md); padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.75rem; font-size: 0.8125rem; color: #0369a1; margin-bottom: 1.5rem;">
           <span class="material-symbols-outlined" style="font-size: 20px;">verified_user</span>
           <span>Setelah transfer berhasil, admin akan memverifikasi dan menerbitkan <strong>Kode Redeem unik</strong> Anda dalam <strong>5–15 menit</strong> via WhatsApp ke nomor yang Anda daftarkan.</span>

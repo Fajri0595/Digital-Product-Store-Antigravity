@@ -693,6 +693,35 @@ function openVerificationWorkspace(orderId) {
   document.getElementById('workNominal').textContent = 'Rp ' + harga.toLocaleString('id-ID');
   document.getElementById('workCustomer').textContent = order['Nama Customer'] || order.customer || '-';
 
+  // Render Bukti Transfer jika ada
+  const proofUrl = order['Bukti Transfer'] || order.buktiTransfer || '';
+  const proofWrap = document.getElementById('workProofWrap');
+  if (proofWrap) {
+    if (proofUrl && proofUrl !== '-' && (proofUrl.startsWith('http://') || proofUrl.startsWith('https://'))) {
+      proofWrap.innerHTML = `
+        <div style="text-align: center; width: 100%;">
+          <a href="${proofUrl}" target="_blank" title="Klik untuk membuka ukuran penuh">
+            <img src="${proofUrl}" alt="Bukti Transfer" style="max-height: 180px; max-width: 100%; object-fit: contain; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); display: inline-block; margin-bottom: 0.6rem; box-shadow: var(--shadow-sm);">
+          </a>
+          <div>
+            <a href="${proofUrl}" target="_blank" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem;">
+              <span class="material-symbols-outlined" style="font-size: 15px;">open_in_new</span>
+              Buka Bukti Asli di Drive
+            </a>
+          </div>
+        </div>
+      `;
+    } else {
+      proofWrap.innerHTML = `
+        <div style="text-align: center; color: var(--text-tertiary); padding: 1.5rem 0.5rem;">
+          <span class="material-symbols-outlined" style="font-size: 32px; color: var(--text-muted); margin-bottom: 0.35rem;">receipt_long</span>
+          <div style="font-size: 0.8125rem; font-weight: 600; color: var(--text-secondary);">Tidak Ada Upload Bukti Transfer</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem;">Customer checkout tanpa lampiran file. Silakan verifikasi manual melalui mutasi rekening BCA / QRIS.</div>
+        </div>
+      `;
+    }
+  }
+
   // Preview key
   const randKey = 'RED-' + (order.namaProduk || 'DIGITAL').slice(0, 4).toUpperCase().replace(/[^A-Z]/g, 'X') + '-' + Math.floor(1000 + Math.random() * 9000) + '-XP';
   document.getElementById('workKeyPreview').textContent = randKey;

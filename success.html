@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesanan Berhasil — Digital Product Store</title>
+  <meta name="description" content="Detail instruksi pembayaran dan status pesanan produk digital Anda.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    .success-container {
+      max-width: 680px;
+      margin: 2.5rem auto 4rem;
+      padding: 0 1rem;
+    }
+    .success-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-2xl);
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .success-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--brand-gradient);
+    }
+    .success-icon-wrap {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: #dcfce7;
+      color: #16a34a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.15);
+      animation: pulse-success 2.5s infinite;
+    }
+    @keyframes pulse-success {
+      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.35); }
+      70% { box-shadow: 0 0 0 14px rgba(34, 197, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+    .success-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .success-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      margin-bottom: 1.75rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .order-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface-container-low);
+      border: 1px solid var(--border-subtle);
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      color: var(--primary-indigo);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    .summary-box {
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      font-size: 0.875rem;
+      border-bottom: 1px dashed var(--border-subtle);
+    }
+    .summary-row:last-child {
+      border-bottom: none;
+      padding-top: 0.75rem;
+    }
+    .payment-instructions-box {
+      background: #fffdf5;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-xl);
+      padding: 1.5rem;
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+    .step-badge {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--primary-indigo);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle); position: sticky; top: 0; z-index: 50;">
+    <div class="nav-container" style="max-width: 1200px; margin: 0 auto; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+      <a href="index.html" class="nav-brand" style="text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+        <span class="brand-badge" style="background: var(--brand-gradient); color: #ffffff; width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-family: 'Sora', sans-serif;">D</span>
+        <span class="brand-text" style="font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">Digital Store</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="index.html" class="btn btn-secondary btn-sm">
+          <span class="material-symbols-outlined" style="font-size: 16px;">storefront</span>
+          <span>Katalog</span>
+        </a>
+        <a href="redeem.html" class="btn btn-outline btn-sm">
+          <span class="material-symbols-outlined" style="font-size: 16px;">key</span>
+          <span>Tukar Redeem</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="success-container">
+    <div class="success-card">
+      <div class="success-icon-wrap">
+        <span class="material-symbols-outlined" style="font-size: 42px;">task_alt</span>
+      </div>
+
+      <h1 class="success-title">Pesanan Berhasil Dibuat!</h1>
+      <p class="success-subtitle">
+        Terima kasih! Pesanan Anda telah tercatat dalam sistem. Silakan selesaikan pembayaran agar akses segera diproses.
+      </p>
+
+      <div class="order-pill">
+        <span class="material-symbols-outlined" style="font-size: 16px;">receipt</span>
+        <span>No. Pesanan: <strong id="successOrderId" style="font-family: 'JetBrains Mono', monospace;">ORD-XXXXX</strong></span>
+        <button type="button" id="btnCopyOrderId" style="background: none; border: none; cursor: pointer; color: var(--primary-indigo); padding: 0; display: inline-flex; align-items: center;" title="Salin No. Pesanan">
+          <span class="material-symbols-outlined" style="font-size: 15px;">content_copy</span>
+        </button>
+      </div>
+
+      <!-- Ringkasan Pesanan -->
+      <div class="summary-box">
+        <div class="summary-row">
+          <span style="color: var(--text-secondary);">Produk Digital</span>
+          <strong id="successProductName" style="color: var(--text-primary); text-align: right; max-width: 60%;">-</strong>
+        </div>
+        <div class="summary-row">
+          <span style="color: var(--text-secondary);">Status Verifikasi</span>
+          <span id="successStatusBadge" class="badge" style="background: #fef3c7; color: #b45309; font-weight: 700;">
+            <span class="badge-dot" style="background: #f59e0b;"></span>
+            Menunggu Transfer
+          </span>
+        </div>
+        <div class="summary-row" id="rowProofStatus" style="display: none;">
+          <span style="color: var(--text-secondary);">Bukti Transfer</span>
+          <span class="badge" style="background: #dcfce7; color: #15803d; font-weight: 600;">
+            <span class="material-symbols-outlined" style="font-size: 13px; vertical-align: middle;">check</span>
+            Sudah Diupload
+          </span>
+        </div>
+        <div class="summary-row">
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">Total yang Wajib Ditransfer</div>
+            <div style="font-size: 0.7rem; color: var(--accent-pending); font-weight: 600;">*Transfer tepat hingga 3 digit terakhir</div>
+          </div>
+          <div style="text-align: right;">
+            <div id="successTotalAmount" style="font-family: 'Sora', sans-serif; font-size: 1.45rem; font-weight: 800; color: var(--primary-indigo);">
+              Rp 0
+            </div>
+            <button type="button" id="btnCopyTotal" class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 0.72rem; margin-top: 0.25rem;">
+              <span class="material-symbols-outlined" style="font-size: 13px;">content_copy</span>
+              Salin Nominal
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instruksi Rekening & QRIS -->
+      <div class="payment-instructions-box">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.45rem; font-weight: 700; color: #92400e; font-size: 0.9rem;">
+            <span class="material-symbols-outlined" style="font-size: 20px;">account_balance</span>
+            Instruksi Pembayaran
+          </div>
+          <span style="font-size: 0.72rem; color: #92400e; background: #fef3c7; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 600;">Verifikasi Cepat</span>
+        </div>
+
+        <!-- Rekening BCA -->
+        <div style="background: #ffffff; border: 2px solid #0060af33; border-radius: var(--radius-lg); padding: 0.9rem 1rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.15rem;">
+              <strong style="color: #0060af; font-size: 0.8125rem; background: #e0f2fe; padding: 0.2rem 0.5rem; border-radius: 4px; letter-spacing: 0.03em;">BCA</strong>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 800; letter-spacing: 0.05em; color: var(--text-primary);">8161449962</span>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-tertiary);">a.n. <strong>Ahmad Fajri Fadhili</strong></div>
+          </div>
+          <button type="button" id="btnCopyRek" class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText('8161449962').then(() => { this.innerHTML = '<span class=\'material-symbols-outlined\' style=\'font-size:14px;color:var(--accent-success);\'>check</span> Tersalin!'; setTimeout(() => { this.innerHTML = '<span class=\'material-symbols-outlined\' style=\'font-size:14px;\'>content_copy</span> Salin'; }, 2000); });">
+            <span class="material-symbols-outlined" style="font-size: 14px;">content_copy</span>
+            Salin
+          </button>
+        </div>
+
+        <!-- QRIS Box -->
+        <div style="background: #f0fdf4; border: 1px solid #86efac; border-radius: var(--radius-lg); padding: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: #15803d; background: #dcfce7; padding: 0.2rem 0.5rem; border-radius: 4px;">QRIS</span>
+            <span style="font-size: 0.8125rem; font-weight: 700; color: #166534;">Scan via Semua E-Wallet / BCA Mobile</span>
+          </div>
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <div style="background: #ffffff; border: 2px solid #86efac; border-radius: var(--radius-md); padding: 0.4rem; text-align: center; flex-shrink: 0;">
+              <img
+                src="https://drive.google.com/thumbnail?id=1dHYlsgZL88WtjhplZHD6DzAJzcyYvx-s&sz=w800"
+                alt="QRIS Ahmad Fajri Fadhili"
+                style="width: 120px; height: 120px; object-fit: contain; display: block; border-radius: 4px;"
+                onerror="this.src='https://lh3.googleusercontent.com/d/1dHYlsgZL88WtjhplZHD6DzAJzcyYvx-s'; this.onerror=function(){this.style.display='none';};"
+              >
+              <div style="font-size: 0.65rem; color: #15803d; font-weight: 700; margin-top: 0.3rem;">Ahmad Fajri Fadhili</div>
+            </div>
+            <div style="font-size: 0.75rem; color: #166534; line-height: 1.6;">
+              <div>1. Buka <strong>BCA Mobile, GoPay, OVO, Dana, ShopeePay</strong></div>
+              <div>2. Pilih menu <strong>Scan QR / QRIS</strong></div>
+              <div>3. Masukkan nominal <strong id="instructionTotalText">persis sesuai Total Transfer</strong></div>
+              <div style="margin-top: 0.4rem; font-size: 0.7rem; color: #15803d;">Otomatis terverifikasi setelah konfirmasi dana masuk.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Next Steps Accordion / List -->
+      <div style="background: var(--surface-container-low); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 1.25rem; text-align: left; margin-bottom: 2rem;">
+        <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
+          <span class="material-symbols-outlined" style="font-size: 18px; color: var(--primary-indigo);">checklist</span>
+          Alur Selanjutnya:
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.8125rem; color: var(--text-secondary);">
+          <div style="display: flex; gap: 0.6rem; align-items: flex-start;">
+            <span class="step-badge">1</span>
+            <div>Lakukan transfer sesuai total nominal (termasuk kode unik) melalui BCA atau QRIS di atas.</div>
+          </div>
+          <div style="display: flex; gap: 0.6rem; align-items: flex-start;">
+            <span class="step-badge">2</span>
+            <div>Admin memverifikasi dana masuk dalam waktu <strong>5–15 menit</strong>.</div>
+          </div>
+          <div style="display: flex; gap: 0.6rem; align-items: flex-start;">
+            <span class="step-badge">3</span>
+            <div>Kode Redeem unik akan dikirimkan langsung ke nomor WhatsApp Anda atau bisa dicek di menu <strong>Tukar Redeem</strong>.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <a href="redeem.html" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
+          <span class="material-symbols-outlined">key</span>
+          <span>Buka Halaman Tukar Redeem</span>
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+
+        <a id="btnWhatsAppConfirm" href="#" target="_blank" class="btn btn-secondary" style="width: 100%; justify-content: center; background: #25d366; color: #ffffff; border-color: #25d366;">
+          <span class="material-symbols-outlined">chat</span>
+          <span>Konfirmasi ke Admin via WhatsApp</span>
+        </a>
+
+        <a href="index.html" class="btn btn-outline" style="width: 100%; justify-content: center;">
+          <span class="material-symbols-outlined">storefront</span>
+          <span>Kembali ke Beranda Katalog</span>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer style="border-top: 1px solid var(--border-subtle); padding: 2rem 1.5rem; text-align: center; font-size: 0.8125rem; color: var(--text-tertiary);">
+    <p>&copy; 2026 Digital Product Store. Akses produk instan dan terpercaya.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get('orderId') || params.get('id') || 'ORD-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+      const productName = params.get('name') ? decodeURIComponent(params.get('name')) : 'Produk Digital';
+      const total = Number(params.get('total')) || 0;
+      const contact = params.get('contact') || '';
+      const email = params.get('email') || '';
+      const hasProof = params.get('proof') === '1';
+
+      // Elements
+      const elOrderId = document.getElementById('successOrderId');
+      const elProductName = document.getElementById('successProductName');
+      const elTotal = document.getElementById('successTotalAmount');
+      const elInstructionTotal = document.getElementById('instructionTotalText');
+      const elProofStatus = document.getElementById('rowProofStatus');
+      const elStatusBadge = document.getElementById('successStatusBadge');
+      const btnCopyOrderId = document.getElementById('btnCopyOrderId');
+      const btnCopyTotal = document.getElementById('btnCopyTotal');
+      const btnWA = document.getElementById('btnWhatsAppConfirm');
+
+      if (elOrderId) elOrderId.textContent = orderId;
+      if (elProductName) elProductName.textContent = productName;
+      
+      const formattedTotal = total > 0 ? 'Rp ' + total.toLocaleString('id-ID') : 'Rp -';
+      if (elTotal) elTotal.textContent = formattedTotal;
+      if (elInstructionTotal && total > 0) {
+        elInstructionTotal.innerHTML = `persis <strong style="color:#15803d;">${formattedTotal}</strong>`;
+      }
+
+      if (hasProof) {
+        if (elProofStatus) elProofStatus.style.display = 'flex';
+        if (elStatusBadge) {
+          elStatusBadge.innerHTML = '<span class="badge-dot" style="background: #10b981;"></span> Bukti Diterima (Menunggu Cek Admin)';
+          elStatusBadge.style.background = '#ecfdf5';
+          elStatusBadge.style.color = '#047857';
+        }
+      }
+
+      // Copy Order ID
+      if (btnCopyOrderId) {
+        btnCopyOrderId.addEventListener('click', () => {
+          navigator.clipboard.writeText(orderId).then(() => {
+            btnCopyOrderId.innerHTML = '<span class="material-symbols-outlined" style="font-size:15px;color:var(--accent-success);">check</span>';
+            setTimeout(() => {
+              btnCopyOrderId.innerHTML = '<span class="material-symbols-outlined" style="font-size:15px;">content_copy</span>';
+            }, 2000);
+          });
+        });
+      }
+
+      // Copy Total
+      if (btnCopyTotal) {
+        btnCopyTotal.addEventListener('click', () => {
+          const rawNum = total ? String(total) : '';
+          navigator.clipboard.writeText(rawNum).then(() => {
+            btnCopyTotal.innerHTML = '<span class="material-symbols-outlined" style="font-size:13px;color:var(--accent-success);">check</span> Tersalin!';
+            setTimeout(() => {
+              btnCopyTotal.innerHTML = '<span class="material-symbols-outlined" style="font-size:13px;">content_copy</span> Salin Nominal';
+            }, 2000);
+          });
+        });
+      }
+
+      // Pre-fill WhatsApp Confirmation Link
+      if (btnWA) {
+        const waNumber = '6281234567890'; // Default admin contact
+        const waMsg = `Halo Admin Digital Store, saya sudah melakukan transfer untuk pesanan:\n\n• No Pesanan: *${orderId}*\n• Produk: *${productName}*\n• Total: *${formattedTotal}*\n\nMohon segera diverifikasi dan diterbitkan Kode Redeem-nya ya. Terima kasih!`;
+        btnWA.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMsg)}`;
+      }
+    });
+  </script>
+</body>
+</html>

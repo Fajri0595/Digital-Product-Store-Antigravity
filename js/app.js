@@ -186,11 +186,18 @@ function renderFilteredProducts() {
               <div class="product-price-label">Harga Akses</div>
               <div class="product-price-value">Rp ${pHarga.toLocaleString('id-ID')}</div>
             </div>
-            <a href="product.html?id=${encodeURIComponent(pId)}" class="btn btn-outline btn-sm">
-              <span>Detail</span>
-              <span class="material-symbols-outlined" style="font-size: 14px;">arrow_forward</span>
-            </a>
+            <div style="display: flex; gap: 0.4rem;">
+              <a href="product.html?id=${encodeURIComponent(pId)}" class="btn btn-outline btn-sm">
+                <span>Detail</span>
+                <span class="material-symbols-outlined" style="font-size: 14px;">arrow_forward</span>
+              </a>
+              <a href="checkout.html?id=${encodeURIComponent(pId)}&name=${encodeURIComponent(pName)}&price=${pHarga}&thumb=${encodeURIComponent(thumb)}" class="btn btn-primary btn-sm">
+                <span class="material-symbols-outlined" style="font-size: 14px;">lock</span>
+                <span>Beli</span>
+              </a>
+            </div>
           </div>
+
         </div>
       </div>
     `;
@@ -472,6 +479,87 @@ function setupCheckoutPage() {
     });
   }
 
+  // Handle Bukti Transfer Upload (Opsional)
+  let base64BuktiTransfer = '';
+  const inputBukti = document.getElementById('inputBuktiTransfer');
+  const dropzoneBukti = document.getElementById('dropzoneBukti');
+  const dropzonePlaceholder = document.getElementById('dropzonePlaceholder');
+  const dropzonePreview = document.getElementById('dropzonePreview');
+  const imgPreviewBukti = document.getElementById('imgPreviewBukti');
+  const txtPreviewName = document.getElementById('txtPreviewName');
+  const txtPreviewSize = document.getElementById('txtPreviewSize');
+  const btnHapusBukti = document.getElementById('btnHapusBukti');
+
+  if (dropzoneBukti && inputBukti) {
+    dropzoneBukti.addEventListener('click', (e) => {
+      if (e.target.closest('#btnHapusBukti')) return;
+      inputBukti.click();
+    });
+
+    // Drag & Drop
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropzoneBukti.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropzoneBukti.style.borderColor = 'var(--primary-indigo)';
+        dropzoneBukti.style.background = 'var(--surface-container-low)';
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropzoneBukti.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropzoneBukti.style.borderColor = 'var(--border-subtle)';
+        dropzoneBukti.style.background = 'var(--surface-subtle)';
+      });
+    });
+
+    dropzoneBukti.addEventListener('drop', (e) => {
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleFileSelect(e.dataTransfer.files[0]);
+      }
+    });
+
+    inputBukti.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        handleFileSelect(e.target.files[0]);
+      }
+    });
+
+    function handleFileSelect(file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Format file tidak didukung. Harap pilih gambar (JPG, PNG, atau WebP).');
+        return;
+      }
+
+      // Max 2MB
+      if (file.size > 2 * 1024 * 1024) {
+        alert('Ukuran file terlalu besar (Maksimal 2 MB). Silakan kompres atau pilih screenshot yang lebih kecil.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (loadEvt) => {
+        base64BuktiTransfer = loadEvt.target.result;
+        if (imgPreviewBukti) imgPreviewBukti.src = base64BuktiTransfer;
+        if (txtPreviewName) txtPreviewName.textContent = file.name;
+        if (txtPreviewSize) txtPreviewSize.textContent = (file.size / 1024).toFixed(1) + ' KB';
+        if (dropzonePlaceholder) dropzonePlaceholder.style.display = 'none';
+        if (dropzonePreview) dropzonePreview.style.display = 'flex';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    if (btnHapusBukti) {
+      btnHapusBukti.addEventListener('click', (e) => {
+        e.stopPropagation();
+        base64BuktiTransfer = '';
+        inputBukti.value = '';
+        if (dropzonePlaceholder) dropzonePlaceholder.style.display = 'block';
+        if (dropzonePreview) dropzonePreview.style.display = 'none';
+      });
+    }
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const currentTotal = recalculateCheckout();
@@ -486,11 +574,16 @@ function setupCheckoutPage() {
         kontakCustomer: document.getElementById('kontakCustomer').value,
         emailCustomer: document.getElementById('emailCustomer').value,
         kodeKupon: appliedCouponCode || '',
-        totalTransfer: currentTotal
+        totalTransfer: currentTotal,
+        buktiTransfer: base64BuktiTransfer || ''
       });
 
-      alert(`✅ Pesanan #${res.idPesanan || 'ORD'} Berhasil Dibuat!\n\nSilakan transfer:\nRp ${currentTotal.toLocaleString('id-ID')}\n\nKe rekening BCA: 8161449962\na.n. Ahmad Fajri Fadhili\n\nPastikan transfer TEPAT hingga 3 digit terakhir.\nKode Redeem akan dikirim via WhatsApp dalam 5–15 menit setelah verifikasi.`);
-      window.location.href = 'redeem.html';
+      const orderId = res.idPesanan || 'ORD';
+      const prodName = decodeURIComponent(name || 'Produk Digital');
+      const hasProof = base64BuktiTransfer ? '1' : '0';
+
+      const successUrl = `success.html?orderId=${encodeURIComponent(orderId)}&name=${encodeURIComponent(prodName)}&total=${currentTotal}&contact=${encodeURIComponent(document.getElementById('kontakCustomer').value)}&email=${encodeURIComponent(document.getElementById('emailCustomer').value)}&proof=${hasProof}`;
+      window.location.href = successUrl;
     } catch (err) {
       alert('Gagal mengirim pesanan: ' + err.message);
       btnSubmit.disabled = false;
