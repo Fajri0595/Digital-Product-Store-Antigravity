@@ -489,7 +489,7 @@ function setupCheckoutPage() {
         totalTransfer: currentTotal
       });
 
-      alert(`Pesanan #${res.idPesanan || 'ORD'} Berhasil Dibuat!\n\nSilakan transfer Rp ${currentTotal.toLocaleString('id-ID')} ke rekening BCA: 8820192841.\nKode Redeem unik akan otomatis diterbitkan dan hak akses Google Drive langsung dibuka setelah konfirmasi.`);
+      alert(`✅ Pesanan #${res.idPesanan || 'ORD'} Berhasil Dibuat!\n\nSilakan transfer:\nRp ${currentTotal.toLocaleString('id-ID')}\n\nKe rekening BCA: 8161449962\na.n. Ahmad Fajri Fadhili\n\nPastikan transfer TEPAT hingga 3 digit terakhir.\nKode Redeem akan dikirim via WhatsApp dalam 5–15 menit setelah verifikasi.`);
       window.location.href = 'redeem.html';
     } catch (err) {
       alert('Gagal mengirim pesanan: ' + err.message);
